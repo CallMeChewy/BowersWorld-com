@@ -1,0 +1,25 @@
+/* Shared CSS for Project Himalaya and Anderson's Library */
+:root {
+    --primary-blue: #1e3c72;
+    --secondary-blue: #2a5298;
+    --accent-gold: #ffd93d;
+    --text-white: #ffffff;
+}
+
+.btn {
+    background: var(--accent-gold);
+    color: var(--primary-blue);
+    border: none;
+    padding: 0.8rem 1.5rem;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: bold;
+    text-decoration: none;
+    display: inline-block;
+    transition: all 0.3s ease;
+}
+
+.btn:hover {
+    background: #ffed4e;
+    transform: translateY(-2px);
+}

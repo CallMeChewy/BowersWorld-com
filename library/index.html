@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Project Himalaya - BowersWorld.com</title>
+    <link rel="stylesheet" href="shared/css/himalaya-theme.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            color: white;
+            min-height: 100vh;
+        }
+
+        .header {
+            background: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), 
+                        url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 400"><path d="M0,400 C200,300 400,350 600,250 C800,150 1000,200 1200,100 L1200,400 Z" fill="%23ffffff10"/></svg>');
+            background-size: cover;
+            background-position: center;
+            padding: 2rem 0;
+            text-align: center;
+            border-bottom: 2px solid rgba(255,255,255,0.1);
+        }
+
+        .sponsored {
+            position: absolute;
+            top: 10px;
+            right: 20px;
+            font-size: 0.8rem;
+            opacity: 0.7;
+        }
+
+        .hero-image {
+            width: 100%;
+            max-width: 800px;
+            height: 200px;
+            background: linear-gradient(45deg, #4a90e2, #7b68ee);
+            border-radius: 10px;
+            margin: 0 auto 2rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hands {
+            font-size: 4rem;
+            display: flex;
+            align-items: center;
+            gap: 2rem;
+        }
+
+        .robot-hand { color: #ff6b6b; }
+        .human-hand { color: #4ecdc4; }
+        .connection { 
+            color: #ffd93d; 
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.7; transform: scale(1.1); }
+        }
+
+        h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .description {
+            max-width: 800px;
+            margin: 0 auto;
+            line-height: 1.6;
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2rem;
+            margin: 2rem 0;
+            color: #a78bfa;
+        }
+
+        .cards-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .card {
+            background: rgba(255,255,255,0.1);
+            border-radius: 10px;
+            padding: 1.5rem;
+            border: 1px solid rgba(255,255,255,0.2);
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            background: rgba(255,255,255,0.15);
+            border-color: rgba(255,255,255,0.3);
+        }
+
+        .card h3 {
+            font-size: 1.3rem;
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .card-icon {
+            font-size: 1.5rem;
+        }
+
+        .card p {
+            opacity: 0.8;
+            line-height: 1.5;
+        }
+
+        /* Library Card Styling */
+        .library-card {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border: 2px solid #ffd93d;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .library-card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(45deg, transparent, rgba(255,255,255,0.1), transparent);
+            transform: rotate(45deg);
+            animation: shine 3s infinite;
+        }
+
+        @keyframes shine {
+            0% { transform: translateX(-100%) translateY(-100%) rotate(45deg); }
+            50% { transform: translateX(0%) translateY(0%) rotate(45deg); }
+            100% { transform: translateX(100%) translateY(100%) rotate(45deg); }
+        }
+
+        .library-card h3 {
+            color: #ffd93d;
+            font-size: 1.5rem;
+        }
+
+        .library-badge {
+            background: #ffd93d;
+            color: #1e3c72;
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: bold;
+        }
+
+        .footer {
+            text-align: center;
+            padding: 2rem;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            opacity: 0.7;
+            font-size: 0.9rem;
+        }
+
+        .chevron {
+            transition: transform 0.3s ease;
+        }
+
+        .card:hover .chevron {
+            transform: translateX(5px);
+        }
+
+        /* Modal styles */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.8);
+            z-index: 1000;
+        }
+
+        .modal-content {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            padding: 2rem;
+            border-radius: 10px;
+            border: 1px solid rgba(255,255,255,0.2);
+            max-width: 400px;
+            width: 90%;
+        }
+
+        .btn {
+            background: #ffd93d;
+            color: #1e3c72;
+            border: none;
+            padding: 0.8rem 1.5rem;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+            text-decoration: none;
+            display: inline-block;
+            margin: 0.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .btn:hover {
+            background: #ffed4e;
+            transform: translateY(-2px);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: white;
+            border: 1px solid white;
+        }
+
+        .btn-secondary:hover {
+            background: rgba(255,255,255,0.1);
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <div class="sponsored">Sponsored by BowersWorld.com</div>
+    
+    <header class="header">
+        <div class="hero-image">
+            <div class="hands">
+                <span class="robot-hand">🤖</span>
+                <span class="connection">✨</span>
+                <span class="human-hand">👤</span>
+            </div>
+        </div>
+        
+        <h1>Project Himalaya</h1>
+        
+        <div class="description">
+            <p>Project Himalaya pioneers a new symbiotic partnership between humans and AI, transcending traditional models where AI serves merely as a tool. We envision AI and humans working together, each contributing unique strengths to achieve what neither could accomplish alone.</p>
+            <br>
+            <p>Our work focuses on developing methodologies, frameworks, and tools that enable seamless knowledge transfer between humans and AI agents. We address key challenges in building complex AI systems—maintaining context across sessions, ensuring knowledge persistence, and facilitating effective communication. Together, we're creating a future where AI is not just a tool, but a true partner in human innovation.</p>
+        </div>
+    </header>
+
+    <main class="container">
+        <h2 class="section-title">Project Documentation</h2>
+        
+        <div class="cards-grid">
+            <div class="card">
+                <h3>
+                    Navigation & Status
+                    <span class="chevron">▼</span>
+                </h3>
+                <p>Current project status, roadmap, and navigation tools for Project Himalaya development.</p>
+            </div>
+
+            <div class="card">
+                <h3>
+                    Project Vision
+                    <span class="chevron">▼</span>
+                </h3>
+                <p>Core philosophy and long-term goals for human-AI collaboration methodologies.</p>
+            </div>
+
+            <div class="card">
+                <h3>
+                    Standards
+                    <span class="chevron">▼</span>
+                </h3>
+                <p>AIDEV-PascalCase-1.7 coding standards and development guidelines.</p>
+            </div>
+
+            <div class="card">
+                <h3>
+                    Templates
+                    <span class="chevron">▼</span>
+                </h3>
+                <p>Reusable code templates and project scaffolding tools.</p>
+            </div>
+
+            <div class="card">
+                <h3>
+                    Knowledge Organization
+                    <span class="chevron">▼</span>
+                </h3>
+                <p>Frameworks for organizing and transferring knowledge between human and AI collaborators.</p>
+            </div>
+
+            <div class="card">
+                <h3>
+                    Framework Implementation
+                    <span class="chevron">▼</span>
+                </h3>
+                <p>Technical implementation details and architectural patterns.</p>
+            </div>
+
+            <!-- NEW LIBRARY CARD -->
+            <div class="card library-card" onclick="openLibraryPortal()">
+                <h3>
+                    Anderson's Digital Library
+                    <span class="library-badge">NEW</span>
+                </h3>
+                <p>Access our comprehensive digital book collection. Browse, search, and read thousands of titles in our secure online library. <strong>Registration required.</strong></p>
+            </div>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <p>© 2025 Project Himalaya. All rights reserved. Sponsored by BowersWorld.com</p>
+    </footer>
+
+    <!-- Library Portal Modal -->
+    <div id="libraryModal" class="modal">
+        <div class="modal-content">
+            <h3 style="margin-bottom: 1rem; color: #ffd93d;">📚 Anderson's Digital Library</h3>
+            <p style="margin-bottom: 1rem;">Welcome to our comprehensive digital book collection! Access requires registration and approval.</p>
+            
+            <div style="margin-bottom: 1.5rem;">
+                <strong>Library Features:</strong><br>
+                • Thousands of books across multiple categories<br>
+                • Advanced search and filtering<br>
+                • Secure user authentication<br>
+                • Mobile-friendly interface
+            </div>
+            
+            <a href="library/" class="btn">Enter Library Portal</a>
+            <button onclick="closeModal()" class="btn btn-secondary">Close</button>
+        </div>
+    </div>
+
+    <script>
+        function openLibraryPortal() {
+            document.getElementById('libraryModal').style.display = 'block';
+        }
+
+        function closeModal() {
+            document.getElementById('libraryModal').style.display = 'none';
+        }
+
+        // Close modal when clicking outside
+        window.onclick = function(event) {
+            const modal = document.getElementById('libraryModal');
+            if (event.target === modal) {
+                modal.style.display = 'none';
+            }
+        }
+
+        // Add click handlers for existing cards (expandable sections)
+        document.querySelectorAll('.card:not(.library-card)').forEach(card => {
+            card.addEventListener('click', function() {
+                const chevron = this.querySelector('.chevron');
+                if (chevron.textContent === '▼') {
+                    chevron.textContent = '▲';
+                    // Add expansion logic here later
+                } else {
+                    chevron.textContent = '▼';
+                    // Add collapse logic here later
+                }
+            });
+        });
+
+        // Development mode indicator
+        if (window.location.hostname.includes('github.io')) {
+            console.log('🚀 Running on GitHub Pages test environment');
+            console.log('🔧 Development mode: All features may not be fully functional');
+        }
+    </script>
+</body>
+</html>
