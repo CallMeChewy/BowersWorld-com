@@ -1,0 +1,1 @@
+fastapi>=0.104.1\nuvicorn[standard]>=0.24.0\nsqlalchemy>=2.0.0\njinja2>=3.1.2\npandas>=2.1.0\nrequests>=2.31.0
