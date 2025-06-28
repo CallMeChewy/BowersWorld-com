@@ -1,0 +1,73 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>OAuth Propagation Demon Detector 😈</title>
+    <style>
+        body { font-family: Arial, sans-serif; padding: 2rem; max-width: 600px; margin: 0 auto; }
+        .status { padding: 1rem; margin: 1rem 0; border-radius: 4px; }
+        .success { background: #d4edda; color: #155724; }
+        .error { background: #f8d7da; color: #721c24; }
+        .info { background: #d1ecf1; color: #0c5460; }
+        pre { background: #f8f9fa; padding: 1rem; border-radius: 4px; font-size: 0.9rem; }
+        button { padding: 0.8rem 1.5rem; background: #007bff; color: white; border: none; border-radius: 4px; cursor: pointer; }
+    </style>
+</head>
+<body>
+    <h1>😈 OAuth Propagation Demon Detector</h1>
+    <p>This mischievous script pings Google's servers to check if your Client ID <em>finally</em> works...</p>
+
+    <button onclick="startDetector()">Summon the Detector</button>
+    <div id="status" class="status info">Click to begin watching for propagation...</div>
+    <pre id="log">Log will appear here...</pre>
+
+    <script>
+        const CLIENT_ID = "906077568035-3ofuni3d731kk5m732nbv040j27b5glt.apps.googleusercontent.com";
+        let intervalId = null;
+
+        function log(message) {
+            const logEl = document.getElementById('log');
+            const time = new Date().toLocaleTimeString();
+            logEl.textContent += `[${time}] ${message}
+`;
+            console.log(message);
+        }
+
+        function setStatus(message, type = 'info') {
+            const statusEl = document.getElementById('status');
+            statusEl.textContent = message;
+            statusEl.className = `status ${type}`;
+        }
+
+        function startDetector() {
+            if (intervalId) {
+                clearInterval(intervalId);
+            }
+
+            setStatus('😈 Detector summoned! Watching for Google to behave...', 'info');
+            log('Summoning OAuth Propagation Demon Detector...');
+
+            intervalId = setInterval(() => {
+                fetch(`https://accounts.google.com/gsi/status?client_id=${CLIENT_ID}`)
+                    .then(resp => {
+                        if (resp.ok) {
+                            setStatus('✅ Client ID accepted! The Demon has retreated.', 'success');
+                            log('✅ Google finally accepts your Client ID!');
+                            clearInterval(intervalId);
+                        } else {
+                            setStatus('😈 Still propagating... Demon remains at large.', 'error');
+                            log(`Demon still haunting your OAuth — status: ${resp.status}`);
+                        }
+                    })
+                    .catch(err => {
+                        setStatus('⚠️ Network hiccup or Demon mischief... Retrying...', 'error');
+                        log('Error pinging Google: ' + err);
+                    });
+            }, 60000);
+
+            log('Polling every 60 seconds...');
+        }
+    </script>
+</body>
+</html>

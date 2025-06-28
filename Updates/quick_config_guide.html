@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Firebase Config Helper</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            max-width: 800px;
+            margin: 2rem auto;
+            padding: 1rem;
+            background: #f5f5f5;
+        }
+        .step {
+            background: white;
+            padding: 1.5rem;
+            margin: 1rem 0;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .step h3 {
+            color: #4285f4;
+            margin-top: 0;
+        }
+        .code-block {
+            background: #f8f9fa;
+            border: 1px solid #e9ecef;
+            border-radius: 4px;
+            padding: 1rem;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9rem;
+            overflow-x: auto;
+        }
+        .highlight {
+            background: #fff3cd;
+            padding: 0.5rem;
+            border-left: 4px solid #ffc107;
+            margin: 1rem 0;
+        }
+        .success {
+            background: #d4edda;
+            padding: 0.5rem;
+            border-left: 4px solid #28a745;
+            margin: 1rem 0;
+        }
+        .navigation {
+            background: #e3f2fd;
+            padding: 1rem;
+            border-radius: 8px;
+            margin-bottom: 2rem;
+        }
+        .navigation strong {
+            color: #1976d2;
+        }
+    </style>
+</head>
+<body>
+    <div class="navigation">
+        <strong>🎯 Current Status:</strong> You have Firebase project "BowersWorld-Digital-Alexandria" with Email/Password and Google auth enabled. Now you need the config values!
+    </div>
+
+    <div class="step">
+        <h3>🔥 Step 1: Get Your Config from Firebase Console</h3>
+        <p>In your current Firebase Console tab:</p>
+        <ol>
+            <li>Click the <strong>gear icon ⚙️</strong> next to "Project Overview" (top left)</li>
+            <li>Select <strong>"Project settings"</strong></li>
+            <li>Scroll down to <strong>"Your apps"</strong> section</li>
+            <li>If you see a web app, click on it. If not, click <strong>"Add app"</strong> → <strong>Web</strong></li>
+            <li>Copy the entire <code>firebaseConfig</code> object</li>
+        </ol>
+        
+        <div class="highlight">
+            <strong>⚠️ Important:</strong> Your project name suggests the config will look like this:
+        </div>
+        
+        <div class="code-block">
+const firebaseConfig = {
+  apiKey: "AIzaSyC-your-long-api-key-here",
+  authDomain: "bowersworld-digital-alexandria.firebaseapp.com",
+  projectId: "bowersworld-digital-alexandria",
+  storageBucket: "bowersworld-digital-alexandria.appspot.com",
+  messagingSenderId: "your-sender-id",
+  appId: "your-app-id"
+};
+        </div>
+    </div>
+
+    <div class="step">
+        <h3>🌐 Step 2: Add Authorized Domains (Do This Now)</h3>
+        <p>In your Firebase Console (stay in Authentication section):</p>
+        <ol>
+            <li>Click <strong>"Settings"</strong> tab (next to "Sign-in method")</li>
+            <li>Scroll to <strong>"Authorized domains"</strong></li>
+            <li>Click <strong>"Add domain"</strong> for each of these:</li>
+        </ol>
+        
+        <div class="code-block">
+localhost
+127.0.0.1
+bowersworld.com
+www.bowersworld.com
+        </div>
+    </div>
+
+    <div class="step">
+        <h3>💻 Step 3: Update Your Local File</h3>
+        <p>Replace the placeholder config in your HTML file with your actual values:</p>
+        
+        <div class="code-block">
+// In your firebase_auth_system.html file, replace this section:
+const firebaseConfig = {
+    apiKey: "AIzaSyC-REPLACE-WITH-YOUR-ACTUAL-API-KEY",
+    authDomain: "anderson-library-XXXXX.firebaseapp.com",
+    projectId: "anderson-library-XXXXX",
+    storageBucket: "anderson-library-XXXXX.appspot.com",
+    messagingSenderId: "123456789012",
+    appId: "1:123456789012:web:abcdef123456789"
+};
+
+// With your actual config values from Step 1
+        </div>
+    </div>
+
+    <div class="step">
+        <h3>🚀 Step 4: Test Locally</h3>
+        <p>Start your local server and test:</p>
+        
+        <div class="code-block">
+cd /home/herb/Desktop/BowersWorld-com
+python3 -m http.server 8080
+        </div>
+        
+        <p>Then visit: <strong>http://localhost:8080/Updates/firebase_auth_system.html</strong></p>
+        
+        <div class="success">
+            <strong>✅ Success indicators:</strong>
+            <ul>
+                <li>Console shows "🔥 Firebase initialized successfully"</li>
+                <li>No API key errors</li>
+                <li>Registration form accepts input</li>
+                <li>Status shows "🔥 Firebase Ready"</li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="step">
+        <h3>🐛 Common Issues & Solutions</h3>
+        
+        <h4>"API key not valid"</h4>
+        <ul>
+            <li>Double-check you copied the config correctly</li>
+            <li>Make sure there are no extra spaces or quotes</li>
+            <li>Verify the project ID matches exactly</li>
+        </ul>
+        
+        <h4>"auth/unauthorized-domain"</h4>
+        <ul>
+            <li>Add authorized domains in Firebase Console</li>
+            <li>Wait 5-10 minutes for changes to take effect</li>
+            <li>Make sure you're using http://localhost:8080, not file://</li>
+        </ul>
+        
+        <h4>CORS errors</h4>
+        <ul>
+            <li>Must use local server (python3 -m http.server 8080)</li>
+            <li>Cannot use file:// protocol</li>
+            <li>Check authorized domains are set up</li>
+        </ul>
+    </div>
+
+    <div class="step">
+        <h3>📋 Next Steps After Config Works</h3>
+        <ol>
+            <li><strong>Test user registration</strong> - Create a test account</li>
+            <li><strong>Set up Google Sheets</strong> - For user management database</li>
+            <li><strong>Upload book data</strong> - Your processed 1,219 books to Google Drive</li>
+            <li><strong>Deploy to GitHub Pages</strong> - Make it live on bowersworld.com</li>
+        </ol>
+    </div>
+
+    <script>
+        console.log('🔧 Firebase Configuration Helper Loaded');
+        console.log('📍 Follow the steps above to get your Firebase config working');
+        
+        // Helper function to validate config format
+        function validateFirebaseConfig(config) {
+            const required = ['apiKey', 'authDomain', 'projectId', 'storageBucket', 'messagingSenderId', 'appId'];
+            const missing = required.filter(key => !config[key] || config[key].includes('REPLACE') || config[key].includes('XXXXX'));
+            
+            if (missing.length > 0) {
+                console.warn('❌ Missing or placeholder values in Firebase config:', missing);
+                return false;
+            }
+            
+            console.log('✅ Firebase config appears valid');
+            return true;
+        }
+        
+        // Make validation function available globally
+        window.validateFirebaseConfig = validateFirebaseConfig;
+        
+        console.log('💡 Tip: After updating your config, you can test it by running validateFirebaseConfig(firebaseConfig) in the console');
+    </script>
+</body>
+</html>

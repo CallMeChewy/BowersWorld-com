@@ -1,0 +1,90 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Combined OAuth & One Tap Test (GIS)</title>
+    <style>
+        body { font-family: Arial, sans-serif; padding: 2rem; max-width: 600px; margin: 0 auto; }
+        .status { padding: 1rem; margin: 1rem 0; border-radius: 4px; }
+        .success { background: #d4edda; color: #155724; }
+        .error { background: #f8d7da; color: #721c24; }
+        .info { background: #d1ecf1; color: #0c5460; }
+        button { padding: 1rem 2rem; margin: 1rem 0; background: #007bff; color: white; border: none; border-radius: 4px; cursor: pointer; }
+        pre { background: #f8f9fa; padding: 1rem; border-radius: 4px; font-size: 0.9rem; }
+    </style>
+</head>
+<body>
+    <h1>✅ Combined OAuth & One Tap Test (GIS)</h1>
+    <p>Standard Button-triggered Auth and automatic One Tap sign-in using Google Identity Services</p>
+    
+    <button onclick="initializeGIS()">Test Button-triggered Auth</button>
+    
+    <div id="status" class="status info">Waiting for Google propagation or ready to test both flows</div>
+    <pre id="log">Log will appear here...</pre>
+
+    <script src="https://accounts.google.com/gsi/client" async defer></script>
+    <script>
+        const CLIENT_ID = "906077568035-3ofuni3d731kk5m732nbv040j27b5glt.apps.googleusercontent.com";
+
+        function log(message) {
+            const logEl = document.getElementById('log');
+            const time = new Date().toLocaleTimeString();
+            logEl.textContent += `[${time}] ${message}
+`;
+            console.log(message);
+        }
+
+        function setStatus(message, type = 'info') {
+            const statusEl = document.getElementById('status');
+            statusEl.textContent = message;
+            statusEl.className = `status ${type}`;
+        }
+
+        window.onload = function() {
+            setStatus('Initializing Google Identity Services for One Tap & Button...', 'info');
+            log('🔄 Initializing Google Identity Services for One Tap & Button...');
+
+            google.accounts.id.initialize({
+                client_id: CLIENT_ID,
+                callback: handleCredentialResponse,
+                auto_select: false
+            });
+
+            google.accounts.id.prompt((notification) => {
+                if (notification.isNotDisplayed()) {
+                    log('⚠️ One Tap prompt was not displayed - user may have no active session or cookies blocked');
+                } else if (notification.isSkippedMoment()) {
+                    log('ℹ️ One Tap prompt was skipped by the browser');
+                } else {
+                    log('✅ One Tap prompt displayed');
+                }
+            });
+        };
+
+        function initializeGIS() {
+            setStatus('Launching Button-triggered Google Identity prompt...', 'info');
+            log('🔄 Launching Button-triggered Google Identity prompt...');
+
+            google.accounts.id.prompt((notification) => {
+                if (notification.isNotDisplayed()) {
+                    log('⚠️ Prompt was not displayed - user may have no active session or cookies blocked');
+                } else if (notification.isSkippedMoment()) {
+                    log('ℹ️ Prompt was skipped by the browser');
+                } else {
+                    log('✅ Prompt displayed via Button');
+                }
+            });
+        }
+
+        function handleCredentialResponse(response) {
+            log('✅ Credential received!');
+            log(`ID Token: ${response.credential}`);
+            const payload = JSON.parse(atob(response.credential.split('.')[1]));
+            log(`User: ${payload.name}`);
+            log(`Email: ${payload.email}`);
+            setStatus('✅ Combined test PASSED!', 'success');
+        }
+    </script>
+</body>
+</html>
