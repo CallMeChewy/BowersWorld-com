@@ -15,7 +15,7 @@ class GoogleDriveAuth {
             ],
             discoveryDocs: [
                 'https://www.googleapis.com/discovery/v1/apis/drive/v3/rest',
-                'https://sheets.googleapis.com/$discovery/rest?version=v4'
+                'https://www.googleapis.com/discovery/v1/apis/sheets/v4/rest'  // ✅ Standard format
             ],
             folderIds: config.folderIds || {},
             sheetIds: config.sheetIds || {}
