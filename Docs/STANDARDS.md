@@ -1,1 +1,0 @@
-# AIDEV-PascalCase-1.7 Standards Reference\n\nSee DevelopmentGuide.md for complete standards documentation.
