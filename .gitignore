@@ -22,6 +22,7 @@ wheels/
 *.egg-info/
 .installed.cfg
 *.egg
+import pandas as pd
 
 # Virtual Environments
 venv/
@@ -38,25 +39,12 @@ ENV/
 *~
 
 # BowersWorld-com Specific (Digital Alexandria Architecture)
-Data/Database/*.db
-Data/Database/*.db-*
-Data/Cache/
-Data/Backups/
+Data/
 Logs/
 *.log
 
 # Sensitive Configuration
-Config/Production/secrets.json
-Config/Production/api_keys.json
-.env
-.env.local
-.env.production
-
-# AI Models (large files)
-Source/AI/Models/*.bin
-Source/AI/Models/*.pt
-Source/AI/Models/*.h5
-Source/AI/Training/
+Config/
 
 # Temporary Files
 tmp/
@@ -89,9 +77,6 @@ coverage.xml
 
 # Add this to your .gitignore file
 *.json
-anderson-library-service-key.json
-config/
-secrets/
 
 # Directories to ignore
 Books/
