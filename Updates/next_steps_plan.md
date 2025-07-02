@@ -12,6 +12,7 @@
 ### 2. Establish Google Drive File Structure
 
 - **Action**: Organize your 1,219 PDFs in Google Drive folders
+
 - **Structure**:
   
   ```

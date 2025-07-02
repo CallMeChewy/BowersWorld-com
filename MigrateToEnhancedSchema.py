@@ -32,15 +32,15 @@ class LibraryDataMigrator:
                  CoversDirectory: str,
                  ThumbnailsDirectory: str):
         """Initialize migrator with file paths"""
-        self.OldDatabasePath = OldDatabasePath
-        self.CSVPath = CSVPath
-        self.NewDatabasePath = NewDatabasePath
-        self.BooksDirectory = Path(BooksDirectory)
-        self.CoversDirectory = Path(CoversDirectory)
-        self.ThumbnailsDirectory = Path(ThumbnailsDirectory)
+        self.OldDatabasePath = "Data/Databases/my_library.db"
+        self.CSVPath = "Data/Spreadsheets/AndersonLibrary_PDFMetadata.csv"
+        self.NewDatabasePath = "Data/Databases/MyLibrary.db"
+        self.BooksDirectory = Path("Data/Books")
+        self.CoversDirectory = Path("Data/Covers")
+        self.ThumbnailsDirectory = Path("Data/Thumbs")
         
         # Load CSV data
-        self.CSVData = pd.read_csv(CSVPath)
+        self.CSVData = pd.read_csv(CSVPath).fillna('')
         print(f"✅ Loaded {len(self.CSVData)} records from CSV")
         
         # Statistics
@@ -90,6 +90,11 @@ class LibraryDataMigrator:
         """Create new database with enhanced schema"""
         print("📄 Creating enhanced database schema...")
         
+        # Delete old database if it exists
+        if os.path.exists(self.NewDatabasePath):
+            os.remove(self.NewDatabasePath)
+            print("🗑️ Removed old database")
+            
         # Read schema from file or create inline
         SchemaSQL = self.GetEnhancedSchema()
         
@@ -273,7 +278,16 @@ class LibraryDataMigrator:
         SubjectID = None
         
         Category = Row.get('database_category')
+        if pd.isna(Category):
+            Category = None
+        else:
+            Category = str(Category)
+            
         Subject = Row.get('database_subject')
+        if pd.isna(Subject):
+            Subject = None
+        else:
+            Subject = str(Subject)
         
         if Category and Category in CategoryMapping:
             CategoryID = CategoryMapping[Category]
@@ -737,12 +751,26 @@ WHERE b.IsActive = 1;
         FROM Books b
         LEFT JOIN Categories c ON b.CategoryID = c.CategoryID
         LEFT JOIN Subjects s ON b.SubjectID = s.SubjectID;
+
+        CREATE VIRTUAL TABLE BooksFullText USING fts5(
+            Title, Author, Publisher, PDFTitle, PDFAuthor, PDFSubject,
+            content='Books', content_rowid='BookID'
+        );
+
+        CREATE TABLE BookAnalytics (
+            AnalyticsID INTEGER NOT NULL,
+            BookID INTEGER NOT NULL,
+            EventType VARCHAR(50) NOT NULL,
+            EventDate TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+            PRIMARY KEY (AnalyticsID),
+            FOREIGN KEY (BookID) REFERENCES Books(BookID) ON DELETE CASCADE
+        );
         """
 
 if __name__ == "__main__":
     # Configuration
     OLD_DATABASE = "Assets/my_library.db"
-    CSV_FILE = "AndersonLibrary_PDFMetadata.csv"
+    CSV_FILE = os.path.join(os.path.dirname(__file__), "Data/Spreadsheets/AndersonLibrary_PDFMetadata.csv")
     NEW_DATABASE = "MyLibrary_Enhanced.db"
     BOOKS_DIR = "Anderson eBooks"
     COVERS_DIR = "Covers"
