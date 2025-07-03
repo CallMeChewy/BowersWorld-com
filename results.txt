@@ -1,0 +1,105 @@
+~$ ~$ # Check if extraction process is running
+ps aux | grep -i himalaya
+ps aux | grep -i python3
+
+# Check CPU usage
+top -p $(pgrep python3)
+herb       25413  116  3.7 18149060 2390208 pts/4 Rl+ 16:05 129:48 /home/herb/Desktop/BowersWorld-com/.venv/bin/python /home/herb/Desktop/BowersWorld-com/HimalayaGPUExtractor.py
+herb       46015  0.0  0.0   4936  3252 ?        S    16:46   0:00 /bin/bash /snap/libreoffice/344/libreoffice.wrapper --calc /home/herb/Desktop/AndersonLibrary_Himalaya_GPU.xlsx
+herb       46077  8.1  1.2 2547068 790588 ?      Sl   16:46   5:45 /snap/libreoffice/344/lib/libreoffice/program/soffice.bin --calc /home/herb/Desktop/AndersonLibrary_Himalaya_GPU.xlsx
+herb       69620  0.0  0.0   9368  2424 pts/6    S+   17:56   0:00 grep --color=auto -i himalaya
+root        3704  0.0  0.0 130056 30124 ?        Ssl  15:05   0:00 /usr/bin/python3 /usr/share/unattended-upgrades/unattended-upgrade-shutdown --wait-for-signal
+root        4389  0.0  0.3 1874020 242984 ?      Sl   15:05   0:09 python3 /snap/home-assistant-snap/637/bin/hass --config /var/snap/home-assistant-snap/637
+herb        7412  0.0  0.0  44576 31120 ?        S    15:05   0:00 python3 /usr/bin/wsdd --no-host --discovery --listen /run/user/1000/gvfsd/wsdd
+herb       12437  0.0  0.0 211388 43020 ?        Sl   15:46   0:00 /home/herb/Documents/Cline/MCP/servers/src/sqlite/.venv/bin/python3 /home/herb/Documents/Cline/MCP/servers/src/sqlite/.venv/bin/mcp-server-sqlite --db-path /home/herb/test.d~$ : unknown option '7412'   9368  2180 pts/6    S+   17:56   0:00 grep --color=
+~$: command not found
+herb       25413  116  3.7 18149060 2390208 pts/4 Rl+ 16:05 131:38 /home/herb/Desktop/BowersWorld-com/.venv/bin/python /home/herb/Desktop/BowersWorld-com/HimalayaGPUExtractor.py
+herb       46015  0.0  0.0   4936  3252 ?        S    16:46   0:00 /bin/bash /snap/libreoffice/344/libreoffice.wrapper --calc /home/herb/Desktop/AndersonLibrary_Himalaya_GPU.xlsx
+herb       46077  7.9  1.2 2547068 790588 ?      Sl   16:46   5:45 /snap/libreoffice/344/lib/libreoffice/program/soffice.bin --calc /home/herb/Desktop/AndersonLibrary_Himalaya_GPU.xlsx
+herb       70346  0.0  0.0   9368  2488 pts/6    S+   17:58   0:00 grep --color=auto -i himalaya
+root        3704  0.0  0.0 130056 30124 ?        Ssl  15:05   0:00 /usr/bin/python3 /usr/share/unattended-upgrades/unattended-upgrade-shutdown --wait-for-signal
+root        4389  0.0  0.3 1874020 242984 ?      Sl   15:05   0:09 python3 /snap/home-assistant-snap/637/bin/hass --config /var/snap/home-assistant-snap/637
+herb        7412  0.0  0.0  44576 31120 ?        S    15:05   0:00 python3 /usr/bin/wsdd --no-host --discovery --listen /run/user/1000/gvfsd/wsdd
+herb       12437  0.0  0.0 211388 43020 ?        Sl   15:46   0:00 /home/herb/Documents/Cline/MCP/servers/src/sqlite/.venv/bin/python3 /home/herb/Documents/Cline/MCP/servers/src/sqlite/.venv/bin/mcp-server-sqlite --db-path /home/herb/test.db
+herb       70348  0.0  0.0   9368  2424 pts/6    S+   17:58   0:00 grep --color=auto -i python3
+top: unknown option '7412'
+Command 'herb' not found, did you mean:
+  command 'erb' from deb ruby (1:3.3~ubuntu3)
+  command 'derb' from deb icu-devtools (76.1-1ubuntu2)
+Try: sudo apt install <deb name>
+Command 'herb' not found, did you mean:
+  command 'erb' from deb ruby (1:3.3~ubuntu3)
+  command 'derb' from deb icu-devtools (76.1-1ubuntu2)
+Try: sudo apt install <deb name>
+Command 'herb' not found, did you mean:
+  command 'derb' from deb icu-devtools (76.1-1ubuntu2)
+  command 'erb' from deb ruby (1:3.3~ubuntu3)
+Try: sudo apt install <deb name>
+Command 'herb' not found, did you mean:
+  command 'erb' from deb ruby (1:3.3~ubuntu3)
+  command 'derb' from deb icu-devtools (76.1-1ubuntu2)
+Try: sudo apt install <deb name>
+Command 'root' not found, but can be installed with:
+sudo snap install root-framework
+Command 'root' not found, but can be installed with:
+sudo snap install root-framework
+Command 'herb' not found, did you mean:
+  command 'derb' from deb icu-devtools (76.1-1ubuntu2)
+  command 'erb' from deb ruby (1:3.3~ubuntu3)
+Try: sudo apt install <deb name>
+Command 'herb' not found, did you mean:
+  command 'derb' from deb icu-devtools (76.1-1ubuntu2)
+  command 'erb' from deb ruby (1:3.3~ubuntu3)
+Try: sudo apt install <deb name>
+Command 'herb' not found, did you mean:
+  command 'derb' from deb icu-devtools (76.1-1ubuntu2)
+  command 'erb' from deb ruby (1:3.3~ubuntu3)
+Try: sudo apt install <deb name>
+Command 'top:' not found, did you mean:
+  command 'top' from deb procps (2:4.0.4-7ubuntu1)
+Try: sudo apt install <deb name>
+~$: command not found
+~$ nvidia-smi
+Wed Jul  2 17:59:48 2025
++-----------------------------------------------------------------------------------------+
+| NVIDIA-SMI 570.133.07             Driver Version: 570.133.07     CUDA Version: 12.8     |
+|-----------------------------------------+------------------------+----------------------+
+| GPU  Name                 Persistence-M | Bus-Id          Disp.A | Volatile Uncorr. ECC |
+| Fan  Temp   Perf          Pwr:Usage/Cap |           Memory-Usage | GPU-Util  Compute M. |
+|                                         |                        |               MIG M. |
+|=========================================+========================+======================|
+|   0  NVIDIA GeForce RTX 4070 ...    Off |   00000000:01:00.0  On |                  N/A |
+| N/A   54C    P8              3W /  115W |    4005MiB /   8188MiB |      0%      Default |
+|                                         |                        |                  N/A |
++-----------------------------------------+------------------------+----------------------+
+
++-----------------------------------------------------------------------------------------+
+| Processes:                                                                              |
+|  GPU   GI   CI              PID   Type   Process name                        GPU Memory |
+|        ID   ID                                                               Usage      |
+|=========================================================================================|
+|    0   N/A  N/A            5937      G   /usr/lib/xorg/Xorg                       45MiB |
+|    0   N/A  N/A            6386      G   ...c/gnome-remote-desktop-daemon          2MiB |
+|    0   N/A  N/A           25413      C   ...ersWorld-com/.venv/bin/python       3926MiB |
++-----------------------------------------------------------------------------------------+
+~$ # Check RAM usage
+free -h
+
+# Check disk space
+df -h
+               total        used        free      shared  buff/cache   available
+Mem:            61Gi        14Gi        45Gi       899Mi       2.9Gi        47Gi
+Swap:          8.0Gi       1.8Gi       6.2Gi
+Filesystem      Size  Used Avail Use% Mounted on
+tmpfs           6.2G  3.6M  6.2G   1% /run
+/dev/nvme0n1p6  1.6T  978G  495G  67% /
+tmpfs            31G   36M   31G   1% /dev/shm
+efivarfs        192K  130K   58K  70% /sys/firmware/efi/efivars
+tmpfs           5.0M   12K  5.0M   1% /run/lock
+tmpfs           1.0M     0  1.0M   0% /run/credentials/systemd-journald.service
+tmpfs           1.0M     0  1.0M   0% /run/credentials/systemd-resolved.service
+/dev/nvme0n1p1   96M   37M   60M  39% /boot/efi
+/dev/nvme1n1p3  686G  524G  128G  81% /media/herb/Linux_Drive_2
+tmpfs            31G   36M   31G   1% /tmp
+tmpfs           6.2G  376K  6.2G   1% /run/user/1000
+~$
