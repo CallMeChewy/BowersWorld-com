@@ -1,0 +1,538 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Anderson's Library - Upgrade Flow Demo</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: #333;
+            line-height: 1.6;
+        }
+        
+        .demo-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        .scenario {
+            background: white;
+            border-radius: 15px;
+            padding: 25px;
+            margin: 20px 0;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            border-left: 5px solid #4285f4;
+        }
+        
+        .scenario h2 {
+            color: #2c3e50;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .limit-hit-modal {
+            background: linear-gradient(135deg, #ff6b6b, #ee5a24);
+            color: white;
+            border-radius: 12px;
+            padding: 25px;
+            margin: 15px 0;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .limit-hit-modal::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(45deg, transparent, rgba(255,255,255,0.1), transparent);
+            transform: rotate(45deg);
+            animation: shine 3s infinite;
+        }
+        
+        @keyframes shine {
+            0% { transform: translateX(-100%) translateY(-100%) rotate(45deg); }
+            100% { transform: translateX(100%) translateY(100%) rotate(45deg); }
+        }
+        
+        .upgrade-card {
+            background: linear-gradient(135deg, #4285f4, #34a853);
+            color: white;
+            border-radius: 12px;
+            padding: 20px;
+            margin: 15px 0;
+            position: relative;
+        }
+        
+        .tier-comparison {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin: 20px 0;
+        }
+        
+        .tier-card {
+            background: #f8f9fa;
+            border-radius: 12px;
+            padding: 20px;
+            text-align: center;
+            position: relative;
+            transition: transform 0.3s ease;
+        }
+        
+        .tier-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .tier-card.current {
+            background: linear-gradient(135deg, #ffeaa7, #fdcb6e);
+            transform: scale(1.05);
+        }
+        
+        .tier-card.recommended {
+            background: linear-gradient(135deg, #00b894, #00cec9);
+            color: white;
+            transform: scale(1.08);
+        }
+        
+        .tier-card.premium {
+            background: linear-gradient(135deg, #6c5ce7, #a29bfe);
+            color: white;
+        }
+        
+        .tier-icon {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+        
+        .tier-title {
+            font-size: 1.4em;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+        
+        .benefit-list {
+            list-style: none;
+            margin: 15px 0;
+        }
+        
+        .benefit-list li {
+            padding: 5px 0;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .benefit-list li::before {
+            content: '✅';
+            font-size: 0.9em;
+        }
+        
+        .upgrade-btn {
+            background: linear-gradient(135deg, #00b894, #00cec9);
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 25px;
+            font-size: 1.1em;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0,184,148,0.3);
+        }
+        
+        .upgrade-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0,184,148,0.4);
+        }
+        
+        .notification-demo {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            border-radius: 12px;
+            padding: 20px;
+            margin: 15px 0;
+        }
+        
+        .priority-badge {
+            background: #e17055;
+            color: white;
+            padding: 4px 12px;
+            border-radius: 15px;
+            font-size: 0.85em;
+            font-weight: bold;
+            display: inline-block;
+            margin-left: 10px;
+        }
+        
+        .progress-bar {
+            background: #ecf0f1;
+            border-radius: 10px;
+            height: 8px;
+            margin: 10px 0;
+            overflow: hidden;
+        }
+        
+        .progress-fill {
+            background: linear-gradient(90deg, #00b894, #00cec9);
+            height: 100%;
+            border-radius: 10px;
+            transition: width 0.3s ease;
+        }
+        
+        .smart-alert {
+            background: #74b9ff;
+            color: white;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 10px 0;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin: 20px 0;
+        }
+        
+        .feature-card {
+            background: #f1f2f6;
+            padding: 15px;
+            border-radius: 8px;
+            text-align: center;
+        }
+        
+        .feature-card.locked {
+            opacity: 0.6;
+            filter: grayscale(50%);
+        }
+        
+        .unlock-hint {
+            background: #ffeaa7;
+            padding: 10px;
+            border-radius: 6px;
+            margin-top: 10px;
+            font-size: 0.9em;
+            color: #2d3436;
+        }
+    </style>
+</head>
+<body>
+    <div class="demo-container">
+        <h1 style="text-align: center; color: white; margin-bottom: 30px; font-size: 2.5em;">
+            📚 Anderson's Library - Smart Upgrade System
+        </h1>
+        
+        <!-- Scenario 1: Download Limit Hit -->
+        <div class="scenario">
+            <h2>🚫 Scenario 1: Daily Download Limit Reached</h2>
+            
+            <div class="limit-hit-modal">
+                <h3 style="font-size: 1.8em; margin-bottom: 15px;">⏰ Daily Download Limit Reached!</h3>
+                <p style="font-size: 1.1em; margin-bottom: 15px;">
+                    You've downloaded <strong>3 books</strong> today (your daily limit as a Basic user).
+                </p>
+                
+                <div class="progress-bar">
+                    <div class="progress-fill" style="width: 100%;"></div>
+                </div>
+                
+                <div style="display: flex; gap: 15px; margin-top: 20px; flex-wrap: wrap;">
+                    <button class="upgrade-btn" onclick="showUpgradeOptions()">
+                        🚀 Upgrade for More Downloads
+                    </button>
+                    <div style="color: rgba(255,255,255,0.9);">
+                        <strong>Or wait:</strong> Limit resets in 8 hours 23 minutes
+                    </div>
+                </div>
+            </div>
+            
+            <div class="smart-alert">
+                <div style="font-size: 2em;">💡</div>
+                <div>
+                    <strong>Smart Suggestion:</strong> Enable our newsletter and new book alerts to get 
+                    <strong>5 downloads per day</strong> + personalized recommendations!
+                </div>
+            </div>
+        </div>
+        
+        <!-- Scenario 2: Enhanced Incentives Display -->
+        <div class="scenario">
+            <h2>⭐ Enhanced Tier Benefits Comparison</h2>
+            
+            <div class="tier-comparison">
+                <div class="tier-card current">
+                    <div class="tier-icon">📚</div>
+                    <div class="tier-title">Basic Access</div>
+                    <div style="color: #e17055; font-weight: bold;">Your Current Tier</div>
+                    <ul class="benefit-list">
+                        <li>3 downloads per day</li>
+                        <li>20 searches per day</li>
+                        <li>Basic book previews</li>
+                        <li>Community support</li>
+                        <li>Standard database updates</li>
+                    </ul>
+                </div>
+                
+                <div class="tier-card recommended">
+                    <div class="tier-icon">🔗</div>
+                    <div class="tier-title">Connected Reader</div>
+                    <div class="priority-badge">RECOMMENDED</div>
+                    <ul class="benefit-list">
+                        <li>5 downloads per day</li>
+                        <li>30 searches per day</li>
+                        <li>📧 Personalized book alerts</li>
+                        <li>🎯 Interest-based notifications</li>
+                        <li>⚡ Priority database updates</li>
+                        <li>2x download speed</li>
+                    </ul>
+                    <div class="unlock-hint">
+                        <strong>Unlock with:</strong> Newsletter + New book alerts
+                    </div>
+                </div>
+                
+                <div class="tier-card premium">
+                    <div class="tier-icon">💎</div>
+                    <div class="tier-title">VIP Experience</div>
+                    <ul class="benefit-list">
+                        <li>Unlimited downloads</li>
+                        <li>Unlimited searches</li>
+                        <li>🔔 Instant new book notifications</li>
+                        <li>🏆 First access to rare books</li>
+                        <li>⚡ Real-time database sync</li>
+                        <li>🚀 Maximum download speeds</li>
+                        <li>👑 Priority support</li>
+                    </ul>
+                    <div class="unlock-hint">
+                        <strong>Unlock with:</strong> All marketing preferences
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Scenario 3: Smart Notifications Demo -->
+        <div class="scenario">
+            <h2>🔔 Smart Notification System</h2>
+            
+            <div class="notification-demo">
+                <h3 style="margin-bottom: 15px;">📱 Personalized Alerts (Connected+ Users)</h3>
+                
+                <div style="background: rgba(255,255,255,0.1); padding: 15px; border-radius: 8px; margin: 10px 0;">
+                    <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 10px;">
+                        <span style="font-size: 1.5em;">🐍</span>
+                        <strong>New Python Book Alert!</strong>
+                        <span class="priority-badge">PRIORITY</span>
+                    </div>
+                    <p>"Advanced Python Web Scraping" just added - matches your programming interests!</p>
+                    <div style="margin-top: 10px; font-size: 0.9em; opacity: 0.8;">
+                        Available for immediate download • Added 2 minutes ago
+                    </div>
+                </div>
+                
+                <div style="background: rgba(255,255,255,0.1); padding: 15px; border-radius: 8px; margin: 10px 0;">
+                    <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 10px;">
+                        <span style="font-size: 1.5em;">🤖</span>
+                        <strong>AI Recommendation</strong>
+                    </div>
+                    <p>Based on your recent downloads, you might love "Machine Learning Engineering"</p>
+                    <div style="margin-top: 10px; font-size: 0.9em; opacity: 0.8;">
+                        94% match confidence • Similar to 3 books you've downloaded
+                    </div>
+                </div>
+            </div>
+            
+            <div class="feature-grid">
+                <div class="feature-card">
+                    <div style="font-size: 2em; margin-bottom: 10px;">⚡</div>
+                    <h4>Instant Alerts</h4>
+                    <p>Get notified within minutes of new books in your interests</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div style="font-size: 2em; margin-bottom: 10px;">🎯</div>
+                    <h4>Smart Targeting</h4>
+                    <p>AI learns your preferences for perfect book matching</p>
+                </div>
+                
+                <div class="feature-card locked">
+                    <div style="font-size: 2em; margin-bottom: 10px;">👑</div>
+                    <h4>VIP Early Access</h4>
+                    <p>First dibs on rare and premium books</p>
+                    <div class="unlock-hint">Upgrade to VIP</div>
+                </div>
+                
+                <div class="feature-card locked">
+                    <div style="font-size: 2em; margin-bottom: 10px;">📊</div>
+                    <h4>Reading Analytics</h4>
+                    <p>Personal insights into your reading patterns</p>
+                    <div class="unlock-hint">Enable analytics permissions</div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Scenario 4: Priority Database Updates -->
+        <div class="scenario">
+            <h2>⚡ Priority Database Update System</h2>
+            
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin: 20px 0;">
+                <div style="background: #fd79a8; color: white; padding: 20px; border-radius: 12px;">
+                    <h4 style="margin-bottom: 15px;">📡 Basic Updates</h4>
+                    <ul style="list-style: none;">
+                        <li style="padding: 5px 0;">📅 Weekly database sync</li>
+                        <li style="padding: 5px 0;">🔄 Updates during off-peak hours</li>
+                        <li style="padding: 5px 0;">📚 New books available next business day</li>
+                        <li style="padding: 5px 0;">⏰ 24-48 hour delay for new content</li>
+                    </ul>
+                </div>
+                
+                <div style="background: #00b894; color: white; padding: 20px; border-radius: 12px;">
+                    <h4 style="margin-bottom: 15px;">⚡ Priority Updates (Connected+)</h4>
+                    <ul style="list-style: none;">
+                        <li style="padding: 5px 0;">🚀 Real-time database sync</li>
+                        <li style="padding: 5px 0;">⚡ Instant new book availability</li>
+                        <li style="padding: 5px 0;">🎯 Personalized update notifications</li>
+                        <li style="padding: 5px 0;">👑 VIP users get 2-hour early access</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="upgrade-card">
+                <h3 style="margin-bottom: 15px;">🔥 Live Update Example</h3>
+                <div style="background: rgba(255,255,255,0.1); padding: 15px; border-radius: 8px;">
+                    <div style="display: flex; justify-content: between; align-items: center;">
+                        <div>
+                            <strong>Database Update in Progress...</strong>
+                            <div style="font-size: 0.9em; opacity: 0.9; margin-top: 5px;">
+                                Adding 12 new books • Priority users get immediate access
+                            </div>
+                        </div>
+                        <div style="font-size: 1.5em;">⚡</div>
+                    </div>
+                    <div class="progress-bar" style="margin-top: 10px;">
+                        <div class="progress-fill" style="width: 75%; animation: pulse 2s infinite;"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Scenario 5: Upgrade Flow -->
+        <div class="scenario">
+            <h2>🚀 Smart Upgrade Flow</h2>
+            
+            <div id="upgradeFlow" style="display: none;">
+                <div style="background: linear-gradient(135deg, #00b894, #00cec9); color: white; padding: 25px; border-radius: 12px;">
+                    <h3 style="margin-bottom: 20px;">🎯 Choose Your Upgrade Path</h3>
+                    
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+                        <div style="background: rgba(255,255,255,0.1); padding: 20px; border-radius: 8px;">
+                            <h4>📧 Quick Boost (Connected)</h4>
+                            <p style="margin: 10px 0;">Just enable newsletter + book alerts</p>
+                            <ul style="list-style: none; font-size: 0.9em;">
+                                <li>✅ 5 downloads per day</li>
+                                <li>✅ 30 searches per day</li>
+                                <li>✅ Smart book notifications</li>
+                                <li>✅ Priority updates</li>
+                            </ul>
+                            <button class="upgrade-btn" style="margin-top: 15px;" onclick="upgradeToConnected()">
+                                Enable Now (2 clicks!)
+                            </button>
+                        </div>
+                        
+                        <div style="background: rgba(255,255,255,0.15); padding: 20px; border-radius: 8px; border: 2px solid rgba(255,255,255,0.3);">
+                            <h4>💎 Full VIP Experience</h4>
+                            <p style="margin: 10px 0;">All permissions for maximum benefits</p>
+                            <ul style="list-style: none; font-size: 0.9em;">
+                                <li>✅ Unlimited everything</li>
+                                <li>✅ Instant notifications</li>
+                                <li>✅ Early access to new books</li>
+                                <li>✅ Priority support</li>
+                            </ul>
+                            <button class="upgrade-btn" style="margin-top: 15px; background: linear-gradient(135deg, #6c5ce7, #a29bfe);" onclick="upgradeToVIP()">
+                                Go VIP (5 permissions)
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div style="text-align: center; margin-top: 20px; font-size: 0.9em; opacity: 0.9;">
+                        💡 You can modify your preferences anytime in account settings
+                    </div>
+                </div>
+            </div>
+            
+            <div style="text-align: center; margin: 20px 0;">
+                <button class="upgrade-btn" id="showUpgradeBtn" onclick="showUpgradeOptions()">
+                    See Upgrade Options
+                </button>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        function showUpgradeOptions() {
+            const upgradeFlow = document.getElementById('upgradeFlow');
+            const btn = document.getElementById('showUpgradeBtn');
+            
+            if (upgradeFlow.style.display === 'none') {
+                upgradeFlow.style.display = 'block';
+                btn.textContent = 'Hide Upgrade Options';
+                upgradeFlow.scrollIntoView({ behavior: 'smooth' });
+            } else {
+                upgradeFlow.style.display = 'none';
+                btn.textContent = 'See Upgrade Options';
+            }
+        }
+        
+        function upgradeToConnected() {
+            alert('🎉 Awesome! You would now see the permission selection form:\n\n✅ Newsletter (weekly library updates)\n✅ New book alerts (instant notifications)\n\nAfter enabling, you immediately get:\n• 5 downloads per day\n• 30 searches per day\n• Smart notifications\n• Priority updates');
+        }
+        
+        function upgradeToVIP() {
+            alert('👑 VIP Upgrade! You would see all available permissions:\n\n✅ Newsletter\n✅ New book alerts\n✅ Personalized recommendations\n✅ Premium offers\n✅ Surveys & feedback\n\nInstant VIP benefits:\n• Unlimited access\n• Real-time updates\n• Early book access\n• Priority support');
+        }
+        
+        // Add some interactive animations
+        document.addEventListener('DOMContentLoaded', function() {
+            const progressBars = document.querySelectorAll('.progress-fill');
+            progressBars.forEach(bar => {
+                const width = bar.style.width;
+                bar.style.width = '0%';
+                setTimeout(() => {
+                    bar.style.width = width;
+                }, 500);
+            });
+        });
+        
+        // Simulate real-time notification
+        setTimeout(() => {
+            const alerts = document.querySelectorAll('.smart-alert');
+            alerts.forEach(alert => {
+                alert.style.animation = 'pulse 2s ease-in-out';
+            });
+        }, 2000);
+    </script>
+    
+    <style>
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.02); }
+            100% { transform: scale(1); }
+        }
+    </style>
+</body>
+</html>

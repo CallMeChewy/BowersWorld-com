@@ -39,7 +39,7 @@ ENV/
 *~
 
 # BowersWorld-com Specific (Digital Alexandria Architecture)
-Data/
+# Data/
 Logs/
 *.log
 
