@@ -1,0 +1,1105 @@
+
+# File: auth.html
+# Path: /home/herb/Desktop/AndyLibrary/WebPages/auth.html
+# Standard: AIDEV-PascalCase-2.1
+# Created: 2025-07-25
+# Last Modified: 2025-07-25 07:34AM
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AndyLibrary - Join the Educational Revolution</title>
+    <link rel="icon" href="/static/assets/AndyLibrary.png" type="image/png">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #333;
+        }
+
+        .auth-container {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+            width: 100%;
+            max-width: 450px;
+            padding: 40px;
+            margin: 20px;
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+
+        .logo-section {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .logo {
+            width: 80px;
+            height: 80px;
+            margin-bottom: 15px;
+            border-radius: 50%;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .brand-name {
+            font-size: 28px;
+            font-weight: 700;
+            color: #2c3e50;
+            margin-bottom: 5px;
+        }
+
+        .brand-tagline {
+            font-size: 14px;
+            color: #7f8c8d;
+            margin-bottom: 20px;
+        }
+
+        .mission-statement {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            font-size: 16px;
+            font-weight: 600;
+            text-align: center;
+            margin-bottom: 30px;
+            line-height: 1.4;
+        }
+
+        .auth-tabs {
+            display: flex;
+            margin-bottom: 30px;
+            background: #ecf0f1;
+            border-radius: 10px;
+            padding: 4px;
+        }
+
+        .tab-button {
+            flex: 1;
+            padding: 12px;
+            border: none;
+            background: transparent;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            color: #7f8c8d;
+        }
+
+        .tab-button.active {
+            background: white;
+            color: #2c3e50;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .form-container {
+            display: none;
+        }
+
+        .form-container.active {
+            display: block;
+            animation: slideIn 0.3s ease;
+        }
+
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #2c3e50;
+            font-size: 14px;
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 15px;
+            border: 2px solid #ecf0f1;
+            border-radius: 10px;
+            font-size: 16px;
+            transition: all 0.3s ease;
+            background: #fafafa;
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: #667eea;
+            background: white;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+
+        .subscription-tiers {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .tier-option {
+            padding: 15px;
+            border: 2px solid #ecf0f1;
+            border-radius: 10px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            background: #fafafa;
+        }
+
+        .tier-option:hover {
+            border-color: #667eea;
+            background: #f8f9ff;
+        }
+
+        .tier-option.selected {
+            border-color: #667eea;
+            background: #667eea;
+            color: white;
+        }
+
+        .tier-name {
+            font-weight: 600;
+            font-size: 14px;
+            margin-bottom: 5px;
+        }
+
+        .tier-price {
+            font-size: 12px;
+            opacity: 0.8;
+        }
+
+        .submit-button {
+            width: 100%;
+            padding: 16px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-bottom: 20px;
+        }
+
+        .submit-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(102, 126, 234, 0.3);
+        }
+
+        .submit-button:active {
+            transform: translateY(0);
+        }
+
+        .submit-button:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .loading {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 2px solid #ffffff;
+            border-radius: 50%;
+            border-top-color: transparent;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        .error-message {
+            background: #e74c3c;
+            color: white;
+            padding: 12px;
+            border-radius: 8px;
+            margin-bottom: 15px;
+            font-size: 14px;
+            display: none;
+        }
+
+        .success-message {
+            background: #27ae60;
+            color: white;
+            padding: 12px;
+            border-radius: 8px;
+            margin-bottom: 15px;
+            font-size: 14px;
+            display: none;
+        }
+
+        .continue-link {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .continue-link a {
+            color: #667eea;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .continue-link a:hover {
+            text-decoration: underline;
+        }
+
+        /* Enhanced Registration Styles */
+        .tier-benefits {
+            font-size: 12px;
+            color: #666;
+            margin-top: 5px;
+        }
+
+        .mission-acknowledgment, .data-consent-section, .publication-request-section {
+            background: #f8f9ff;
+            padding: 20px;
+            border-radius: 10px;
+            border-left: 4px solid #667eea;
+            margin-bottom: 20px;
+        }
+
+        .mission-acknowledgment h4, .data-consent-section h4, .publication-request-section h4 {
+            margin: 0 0 10px 0;
+            color: #2c3e50;
+            font-size: 16px;
+        }
+
+        .mission-acknowledgment p, .data-consent-section p, .publication-request-section p {
+            margin: 0 0 15px 0;
+            color: #7f8c8d;
+            line-height: 1.5;
+        }
+
+        .checkbox-label {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 12px;
+            cursor: pointer;
+            line-height: 1.4;
+        }
+
+        .checkbox-label input[type="checkbox"] {
+            margin-right: 10px;
+            margin-top: 2px;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+
+        .form-col {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .form-col small {
+            color: #7f8c8d;
+            font-size: 12px;
+            margin-top: 5px;
+        }
+
+        .publication-request-item {
+            background: white;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 15px;
+            border: 1px solid #ecf0f1;
+        }
+
+        .add-request-button {
+            background: #3498db;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: background 0.3s;
+        }
+
+        .add-request-button:hover {
+            background: #2980b9;
+        }
+
+        /* Responsive design */
+        @media (max-width: 480px) {
+            .auth-container {
+                padding: 30px 20px;
+                margin: 10px;
+            }
+
+            .subscription-tiers {
+                grid-template-columns: 1fr;
+            }
+
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Social Login Styles */
+        .social-login-section {
+            margin-bottom: 30px;
+        }
+
+        .social-login-header {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .social-login-header span {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: #333;
+        }
+
+        .social-login-header small {
+            display: block;
+            color: #666;
+            font-size: 0.9rem;
+            margin-top: 5px;
+        }
+
+        .social-buttons-container {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+
+        .social-login-button {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 12px 20px;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            background: white;
+            color: #333;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .social-login-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            text-decoration: none;
+            color: #333;
+        }
+
+        .social-login-button.google {
+            border-color: #db4437;
+        }
+
+        .social-login-button.google:hover {
+            background: #f5f5f5;
+            border-color: #c23321;
+        }
+
+        .social-login-button.github {
+            border-color: #333;
+        }
+
+        .social-login-button.github:hover {
+            background: #f5f5f5;
+            border-color: #000;
+        }
+
+        .social-login-button.facebook {
+            border-color: #1877f2;
+        }
+
+        .social-login-button.facebook:hover {
+            background: #f5f5f5;
+            border-color: #166fe5;
+        }
+
+        .social-button-icon {
+            margin-right: 12px;
+            font-size: 1.2rem;
+        }
+
+        .divider {
+            position: relative;
+            text-align: center;
+            margin: 25px 0;
+        }
+
+        .divider::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: #ddd;
+        }
+
+        .divider span {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 0 15px;
+            color: #666;
+            font-size: 0.9rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="auth-container">
+        <div class="logo-section">
+            <div class="brand-name">AndyLibrary</div>
+            <div class="brand-tagline">Educational Library Platform</div>
+        </div>
+
+        <div class="mission-statement">
+            "Getting education into the hands of people who can least afford it"
+        </div>
+
+        <div class="auth-tabs">
+            <button class="tab-button active" onclick="switchTab('login')">Login</button>
+            <button class="tab-button" onclick="switchTab('register')">Join Us</button>
+        </div>
+
+        <!-- Error/Success Messages -->
+        <div id="error-message" class="error-message"></div>
+        <div id="success-message" class="success-message"></div>
+
+        <!-- Login Form -->
+        <div id="login-form" class="form-container active">
+            <!-- Social Login Options -->
+            <div class="social-login-section">
+                <div class="social-login-header">
+                    <span>Quick Login Options</span>
+                    <small>Optional - Email login always works</small>
+                </div>
+                <div id="social-login-buttons" class="social-buttons-container">
+                    <!-- Social buttons will be loaded here -->
+                </div>
+                <div class="divider">
+                    <span>or use email</span>
+                </div>
+            </div>
+
+            <form id="loginForm" onsubmit="handleLogin(event)">
+                <div class="form-group">
+                    <label class="form-label" for="login-email">Email Address</label>
+                    <input type="email" id="login-email" class="form-input" required>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label" for="login-password">Password</label>
+                    <input type="password" id="login-password" class="form-input" required>
+                </div>
+
+                <button type="submit" class="submit-button" id="login-submit">
+                    <span id="login-text">Enter Library</span>
+                    <span id="login-loading" class="loading" style="display: none;"></span>
+                </button>
+            </form>
+        </div>
+
+        <!-- Registration Form -->
+        <div id="register-form" class="form-container">
+            <form id="registerForm" onsubmit="handleRegistration(event)">
+                <div class="form-group">
+                    <label class="form-label" for="register-email">Email Address</label>
+                    <input type="email" id="register-email" class="form-input" required>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label" for="register-username">Username (optional)</label>
+                    <input type="text" id="register-username" class="form-input" placeholder="Choose a unique username">
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label" for="register-password">Password</label>
+                    <input type="password" id="register-password" class="form-input" minlength="8" required>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Choose Your Membership</label>
+                    <div class="subscription-tiers">
+                        <div class="tier-option selected" onclick="selectTier(this, 'free')">
+                            <div class="tier-name">Free Explorer</div>
+                            <div class="tier-price">$0/month</div>
+                            <div class="tier-benefits">3 downloads/day, 25 search results</div>
+                        </div>
+                        <div class="tier-option" onclick="selectTier(this, 'scholar')">
+                            <div class="tier-name">Scholar</div>
+                            <div class="tier-price">$9.99/month</div>
+                            <div class="tier-benefits">10 downloads/day, 50 search results</div>
+                        </div>
+                        <div class="tier-option" onclick="selectTier(this, 'researcher')">
+                            <div class="tier-name">Researcher</div>
+                            <div class="tier-price">$19.99/month</div>
+                            <div class="tier-benefits">25 downloads/day, unlimited search</div>
+                        </div>
+                        <div class="tier-option" onclick="selectTier(this, 'institution')">
+                            <div class="tier-name">Institution</div>
+                            <div class="tier-price">$99/month</div>
+                            <div class="tier-benefits">Unlimited access for organization</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Mission Acknowledgment -->
+                <div class="form-group">
+                    <div class="mission-acknowledgment">
+                        <h4>📚 Our Educational Mission</h4>
+                        <p>AndyLibrary is dedicated to getting education into the hands of people who can least afford it. We provide global access to educational materials while protecting students from data costs and ensuring sustainable resource sharing.</p>
+
+                        <label class="checkbox-label">
+                            <input type="checkbox" id="mission-acknowledgment" required>
+                            <span class="checkmark"></span>
+                            I understand and support AndyLibrary's educational mission
+                        </label>
+                    </div>
+                </div>
+
+                <!-- Data Consent and Preferences -->
+                <div class="form-group">
+                    <div class="data-consent-section">
+                        <h4>🌍 Help Us Serve Students Better (Optional)</h4>
+                        <p>Your anonymous data helps us understand global educational needs and improve our collection.</p>
+
+                        <label class="checkbox-label">
+                            <input type="checkbox" id="anonymous-usage-consent">
+                            <span class="checkmark"></span>
+                            Share anonymous usage analytics to help improve educational access
+                        </label>
+
+                        <label class="checkbox-label">
+                            <input type="checkbox" id="data-sharing-consent">
+                            <span class="checkmark"></span>
+                            Include my preferences in aggregated educational planning data
+                        </label>
+
+                        <div id="preferences-section" style="display: none; margin-top: 15px;">
+                            <div class="form-row">
+                                <div class="form-col">
+                                    <label class="form-label" for="academic-level">Academic Level</label>
+                                    <select id="academic-level" class="form-input">
+                                        <option value="">Select level...</option>
+                                        <option value="high-school">High School</option>
+                                        <option value="undergraduate">Undergraduate</option>
+                                        <option value="graduate">Graduate</option>
+                                        <option value="professional">Professional</option>
+                                        <option value="researcher">Researcher</option>
+                                        <option value="educator">Educator</option>
+                                    </select>
+                                </div>
+                                <div class="form-col">
+                                    <label class="form-label" for="institution-type">Institution Type</label>
+                                    <select id="institution-type" class="form-input">
+                                        <option value="">Select type...</option>
+                                        <option value="university">University</option>
+                                        <option value="college">College</option>
+                                        <option value="school">School</option>
+                                        <option value="library">Library</option>
+                                        <option value="research-institute">Research Institute</option>
+                                        <option value="self-study">Self Study</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="form-row">
+                                <div class="form-col">
+                                    <label class="form-label" for="geographic-region">Geographic Region</label>
+                                    <select id="geographic-region" class="form-input">
+                                        <option value="">Select region...</option>
+                                        <option value="north-america">North America</option>
+                                        <option value="south-america">South America</option>
+                                        <option value="europe">Europe</option>
+                                        <option value="africa">Africa</option>
+                                        <option value="asia">Asia</option>
+                                        <option value="oceania">Oceania</option>
+                                        <option value="middle-east">Middle East</option>
+                                    </select>
+                                </div>
+                                <div class="form-col">
+                                    <label class="form-label" for="preferred-subjects">Subjects of Interest</label>
+                                    <input type="text" id="preferred-subjects" class="form-input" placeholder="e.g. Mathematics, Biology, History">
+                                    <small>Separate multiple subjects with commas</small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Publication Requests -->
+                <div class="form-group">
+                    <div class="publication-request-section">
+                        <h4>📖 Request Educational Materials</h4>
+                        <p>Help us prioritize which educational materials to add to our collection.</p>
+
+                        <div id="publication-requests">
+                            <div class="publication-request-item">
+                                <div class="form-row">
+                                    <div class="form-col">
+                                        <label class="form-label" for="request-type-1">Request Type</label>
+                                        <select id="request-type-1" class="form-input">
+                                            <option value="">Select type...</option>
+                                            <option value="subject_area">Subject Area</option>
+                                            <option value="specific_title">Specific Book/Paper</option>
+                                            <option value="author">Works by Author</option>
+                                            <option value="level">Academic Level Focus</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-col">
+                                        <label class="form-label" for="request-content-1">What would you like to see?</label>
+                                        <input type="text" id="request-content-1" class="form-input" placeholder="Describe the materials you need">
+                                    </div>
+                                </div>
+                                <div class="form-row">
+                                    <div class="form-col">
+                                        <label class="form-label" for="request-subject-1">Subject Area</label>
+                                        <input type="text" id="request-subject-1" class="form-input" placeholder="e.g. Engineering, Medicine">
+                                    </div>
+                                    <div class="form-col">
+                                        <label class="form-label" for="request-reason-1">Why is this important?</label>
+                                        <input type="text" id="request-reason-1" class="form-input" placeholder="How will this help your studies?">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <button type="button" onclick="addPublicationRequest()" class="add-request-button">+ Add Another Request</button>
+                    </div>
+                </div>
+
+                <input type="hidden" id="selected-tier" value="free">
+
+                <button type="submit" class="submit-button" id="register-submit">
+                    <span id="register-text">Join AndyLibrary</span>
+                    <span id="register-loading" class="loading" style="display: none;"></span>
+                </button>
+            </form>
+        </div>
+
+        <div class="continue-link">
+            <a href="javascript:void(0)" onclick="skipAuthentication()">Continue as Guest (Limited Access)</a>
+        </div>
+    </div>
+
+    <script>
+        let currentTab = 'login';
+        let selectedSubscriptionTier = 'free';
+
+        function switchTab(tab) {
+            // Update tab buttons
+            document.querySelectorAll('.tab-button').forEach(btn => btn.classList.remove('active'));
+            document.querySelector(`[onclick="switchTab('${tab}')"]`).classList.add('active');
+
+            // Update form containers
+            document.querySelectorAll('.form-container').forEach(container => container.classList.remove('active'));
+            document.getElementById(`${tab}-form`).classList.add('active');
+
+            currentTab = tab;
+            clearMessages();
+        }
+
+        function selectTier(element, tier) {
+            // Remove selection from all tiers
+            document.querySelectorAll('.tier-option').forEach(option => option.classList.remove('selected'));
+
+            // Add selection to clicked tier
+            element.classList.add('selected');
+
+            // Update hidden input
+            document.getElementById('selected-tier').value = tier;
+            selectedSubscriptionTier = tier;
+        }
+
+        function clearMessages() {
+            document.getElementById('error-message').style.display = 'none';
+            document.getElementById('success-message').style.display = 'none';
+        }
+
+        function showError(message) {
+            const errorDiv = document.getElementById('error-message');
+            errorDiv.textContent = message;
+            errorDiv.style.display = 'block';
+            document.getElementById('success-message').style.display = 'none';
+        }
+
+        function showSuccess(message) {
+            const successDiv = document.getElementById('success-message');
+            successDiv.textContent = message;
+            successDiv.style.display = 'block';
+            document.getElementById('error-message').style.display = 'none';
+        }
+
+        function setLoading(formType, isLoading) {
+            const submitButton = document.getElementById(`${formType}-submit`);
+            const textSpan = document.getElementById(`${formType}-text`);
+            const loadingSpan = document.getElementById(`${formType}-loading`);
+
+            if (isLoading) {
+                submitButton.disabled = true;
+                textSpan.style.display = 'none';
+                loadingSpan.style.display = 'inline-block';
+            } else {
+                submitButton.disabled = false;
+                textSpan.style.display = 'inline';
+                loadingSpan.style.display = 'none';
+            }
+        }
+
+        async function handleLogin(event) {
+            event.preventDefault();
+            clearMessages();
+            setLoading('login', true);
+
+            const email = document.getElementById('login-email').value;
+            const password = document.getElementById('login-password').value;
+
+            try {
+                const response = await fetch('/api/auth/login', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        email: email,
+                        password: password
+                    })
+                });
+
+                const data = await response.json();
+
+                if (response.ok) {
+                    // Store authentication token
+                    localStorage.setItem('auth_token', data.session_token);
+                    localStorage.setItem('refresh_token', data.refresh_token);
+                    localStorage.setItem('user_info', JSON.stringify(data.user));
+
+                    showSuccess(data.message);
+
+                    // Redirect to setup page to install AndyLibrary
+                    setTimeout(() => {
+                        window.location.href = '/setup.html';
+                    }, 1000);
+                } else {
+                    if (data.verification_required) {
+                        showError(`📧 Email verification required! Please check your email (${email}) and click the verification link to activate your account before logging in.`);
+                    } else {
+                        showError(data.detail || 'Login failed. Please try again.');
+                    }
+                }
+            } catch (error) {
+                console.error('Login error:', error);
+                showError('Network error. Please check your connection and try again.');
+            } finally {
+                setLoading('login', false);
+            }
+        }
+
+        async function handleRegistration(event) {
+            event.preventDefault();
+            clearMessages();
+            setLoading('register', true);
+
+            const email = document.getElementById('register-email').value;
+            const username = document.getElementById('register-username').value || null;
+            const password = document.getElementById('register-password').value;
+
+            // Collect mission acknowledgment
+            const missionAcknowledgment = document.getElementById('mission-acknowledgment').checked;
+
+            // Collect data consent preferences
+            const dataSharingConsent = document.getElementById('data-sharing-consent').checked;
+            const anonymousUsageConsent = document.getElementById('anonymous-usage-consent').checked;
+
+            // Collect user preferences (only if consent given)
+            let userPreferences = null;
+            if (dataSharingConsent || anonymousUsageConsent) {
+                const preferredSubjectsValue = document.getElementById('preferred-subjects').value;
+                const preferredSubjects = preferredSubjectsValue ?
+                    preferredSubjectsValue.split(',').map(s => s.trim()).filter(s => s) : [];
+
+                userPreferences = {
+                    data_sharing_consent: dataSharingConsent,
+                    anonymous_usage_consent: anonymousUsageConsent,
+                    preferred_subjects: preferredSubjects,
+                    academic_level: document.getElementById('academic-level').value || null,
+                    institution_type: document.getElementById('institution-type').value || null,
+                    geographic_region: document.getElementById('geographic-region').value || null
+                };
+            }
+
+            // Collect publication requests
+            const publicationRequests = [];
+            const requestItems = document.querySelectorAll('.publication-request-item');
+
+            requestItems.forEach((item, index) => {
+                const requestType = document.getElementById(`request-type-${index + 1}`)?.value;
+                const requestContent = document.getElementById(`request-content-${index + 1}`)?.value;
+                const requestSubject = document.getElementById(`request-subject-${index + 1}`)?.value;
+                const requestReason = document.getElementById(`request-reason-${index + 1}`)?.value;
+
+                if (requestType && requestContent) {
+                    publicationRequests.push({
+                        request_type: requestType,
+                        content_description: requestContent,
+                        subject_area: requestSubject || null,
+                        reason: requestReason || null
+                    });
+                }
+            });
+
+            // Build registration payload
+            const registrationData = {
+                email: email,
+                username: username,
+                password: password,
+                subscription_tier: selectedSubscriptionTier,
+                mission_acknowledgment: missionAcknowledgment
+            };
+
+            // Add optional data if provided
+            if (userPreferences) {
+                registrationData.user_preferences = userPreferences;
+            }
+
+            if (publicationRequests.length > 0) {
+                registrationData.publication_requests = publicationRequests;
+            }
+
+            try {
+                const response = await fetch('/api/auth/register', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(registrationData)
+                });
+
+                const data = await response.json();
+
+                if (response.ok) {
+                    if (data.verification_required) {
+                        showSuccess(`✅ Registration successful! 📧 Please check your email (${email}) for verification instructions. You must verify your email before you can log in.`);
+
+                        // Switch to login tab after successful registration
+                        setTimeout(() => {
+                            switchTab('login');
+                            document.getElementById('login-email').value = email;
+                            showInfo('⚠️ Remember to verify your email before attempting to log in.');
+                        }, 3000);
+                    } else {
+                        showSuccess(data.message || 'Registration successful!');
+
+                        // Switch to login tab after successful registration
+                        setTimeout(() => {
+                            switchTab('login');
+                            document.getElementById('login-email').value = email;
+                        }, 2000);
+                    }
+                } else {
+                    if (data.verification_required) {
+                        showError(`Email verification required. Please check your email (${email}) and click the verification link.`);
+                    } else {
+                        showError(data.detail || 'Registration failed. Please try again.');
+                    }
+                }
+            } catch (error) {
+                console.error('Registration error:', error);
+                showError('Network error. Please check your connection and try again.');
+            } finally {
+                setLoading('register', false);
+            }
+        }
+
+        function skipAuthentication() {
+            // Continue to main library without authentication (for testing)
+            window.location.href = '/';
+        }
+
+        function addPublicationRequest() {
+            const container = document.getElementById('publication-requests');
+            const requestItems = container.querySelectorAll('.publication-request-item');
+            const newIndex = requestItems.length + 1;
+
+            const newRequestHTML = `
+                <div class="publication-request-item">
+                    <div class="form-row">
+                        <div class="form-col">
+                            <label class="form-label" for="request-type-${newIndex}">Request Type</label>
+                            <select id="request-type-${newIndex}" class="form-input">
+                                <option value="">Select type...</option>
+                                <option value="subject_area">Subject Area</option>
+                                <option value="specific_title">Specific Book/Paper</option>
+                                <option value="author">Works by Author</option>
+                                <option value="level">Academic Level Focus</option>
+                            </select>
+                        </div>
+                        <div class="form-col">
+                            <label class="form-label" for="request-content-${newIndex}">What would you like to see?</label>
+                            <input type="text" id="request-content-${newIndex}" class="form-input" placeholder="Describe the materials you need">
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-col">
+                            <label class="form-label" for="request-subject-${newIndex}">Subject Area</label>
+                            <input type="text" id="request-subject-${newIndex}" class="form-input" placeholder="e.g. Engineering, Medicine">
+                        </div>
+                        <div class="form-col">
+                            <label class="form-label" for="request-reason-${newIndex}">Why is this important?</label>
+                            <input type="text" id="request-reason-${newIndex}" class="form-input" placeholder="How will this help your studies?">
+                        </div>
+                    </div>
+                </div>
+            `;
+
+            container.insertAdjacentHTML('beforeend', newRequestHTML);
+        }
+
+        function togglePreferencesSection() {
+            const dataSharingConsent = document.getElementById('data-sharing-consent').checked;
+            const anonymousUsageConsent = document.getElementById('anonymous-usage-consent').checked;
+            const preferencesSection = document.getElementById('preferences-section');
+
+            if (dataSharingConsent || anonymousUsageConsent) {
+                preferencesSection.style.display = 'block';
+            } else {
+                preferencesSection.style.display = 'none';
+            }
+        }
+
+        // Load social login providers
+        async function loadSocialLoginButtons() {
+            try {
+                const response = await fetch('/api/auth/oauth/providers');
+                const data = await response.json();
+
+                const container = document.getElementById('social-login-buttons');
+                const socialSection = document.querySelector('.social-login-section');
+
+                if (data.providers && Object.keys(data.providers).length > 0) {
+                    let hasConfiguredProviders = false;
+
+                    // Create buttons for configured providers
+                    Object.entries(data.providers).forEach(([providerId, config]) => {
+                        if (config.configured) {
+                            hasConfiguredProviders = true;
+                            const button = document.createElement('a');
+                            button.className = `social-login-button ${providerId}`;
+                            button.href = `/api/auth/oauth/${providerId}`;
+
+                            // Provider icons and names
+                            const icons = {
+                                google: '🔍',
+                                github: '🐙',
+                                facebook: '📘'
+                            };
+
+                            button.innerHTML = `
+                                <span class="social-button-icon">${icons[providerId] || '🔗'}</span>
+                                Continue with ${config.name}
+                            `;
+
+                            container.appendChild(button);
+                        }
+                    });
+
+                    // Hide social section if no providers configured
+                    if (!hasConfiguredProviders) {
+                        socialSection.style.display = 'none';
+                    }
+                } else {
+                    // Hide social section if no providers available
+                    socialSection.style.display = 'none';
+                }
+
+            } catch (error) {
+                console.log('Social login not available:', error);
+                // Hide social section on error
+                const socialSection = document.querySelector('.social-login-section');
+                if (socialSection) {
+                    socialSection.style.display = 'none';
+                }
+            }
+        }
+
+        // Handle URL parameters for OAuth results
+        function handleOAuthResults() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const success = urlParams.get('success');
+            const error = urlParams.get('error');
+            const message = urlParams.get('message');
+            const token = urlParams.get('token');
+            const provider = urlParams.get('provider');
+
+            if (success === 'oauth_login' && token) {
+                // Store the token and redirect
+                localStorage.setItem('auth_token', token);
+                showSuccess(`Successfully logged in with ${provider}! Redirecting to library...`);
+                setTimeout(() => {
+                    window.location.href = '/setup.html';
+                }, 2000);
+            } else if (error) {
+                const errorMessages = {
+                    'oauth_cancelled': 'Social login was cancelled. You can still register with email.',
+                    'oauth_failed': 'Social login failed. Please try email registration.',
+                    'oauth_unavailable': 'Social login not available. Please use email registration.',
+                    'account_creation_failed': message || 'Account creation failed.',
+                    'oauth_error': 'Social login error. Please try email registration.'
+                };
+                showError(errorMessages[error] || message || 'Login failed. Please try again.');
+            }
+
+            // Clean URL after handling parameters
+            if (success || error) {
+                window.history.replaceState({}, document.title, window.location.pathname);
+            }
+        }
+
+        // Check if user is already authenticated
+        window.addEventListener('load', function() {
+            const authToken = localStorage.getItem('auth_token');
+            if (authToken) {
+                // User is already logged in, redirect to setup/library
+                window.location.href = '/setup.html';
+            }
+
+            // Load social login buttons
+            loadSocialLoginButtons();
+
+            // Handle OAuth callback results
+            handleOAuthResults();
+
+            // Add event listeners for preferences section toggle
+            document.getElementById('data-sharing-consent').addEventListener('change', togglePreferencesSection);
+            document.getElementById('anonymous-usage-consent').addEventListener('change', togglePreferencesSection);
+        });
+    </script>
+</body>
+</html>
