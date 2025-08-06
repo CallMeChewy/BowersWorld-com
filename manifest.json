@@ -1,0 +1,38 @@
+{
+  "name": "AndyLibrary - Educational Digital Library",
+  "short_name": "AndyLibrary",
+  "description": "Educational digital library - Getting education into the hands of people who can least afford it",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#1a365d",
+  "theme_color": "#3182ce",
+  "orientation": "portrait",
+  "categories": ["education", "books", "library"],
+  "lang": "en",
+  "icons": [
+    {
+      "src": "/static/assets/AndyLibrary.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/static/assets/AndyLibrary.png", 
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ],
+  "scope": "/",
+  "id": "andylibrary-edu",
+  "screenshots": [
+    {
+      "src": "/static/assets/screenshot-tablet.png",
+      "sizes": "1024x768",
+      "type": "image/png",
+      "form_factor": "wide",
+      "label": "Library interface on tablet"
+    }
+  ],
+  "prefer_related_applications": false
+}

@@ -1,0 +1,732 @@
+# File: setup.html
+# Path: /home/herb/Desktop/AndyLibrary/WebPages/setup.html
+# Standard: AIDEV-PascalCase-2.1
+# Created: 2025-07-25
+# Last Modified: 2025-07-25 07:33AM
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AndyLibrary Setup - Installing Your Educational Library</title>
+    <link rel="icon" href="/static/assets/AndyLibrary.png" type="image/png">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            padding: 20px;
+        }
+
+        .setup-container {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            width: 100%;
+            max-width: 600px;
+            text-align: center;
+            color: #333;
+        }
+
+        .setup-header {
+            margin-bottom: 30px;
+        }
+
+        .setup-title {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .setup-subtitle {
+            font-size: 1.2rem;
+            color: #666;
+            margin-bottom: 20px;
+        }
+
+        .mission-reminder {
+            background: linear-gradient(45deg, #FFD700, #FFA500);
+            color: #333;
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+            font-weight: 500;
+        }
+
+        .setup-progress {
+            margin-bottom: 30px;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 8px;
+            background: #e0e0e0;
+            border-radius: 4px;
+            overflow: hidden;
+            margin-bottom: 15px;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            width: 0%;
+            transition: width 0.5s ease;
+        }
+
+        .progress-text {
+            font-size: 1.1rem;
+            font-weight: 500;
+            color: #333;
+        }
+
+        .setup-steps {
+            text-align: left;
+            margin-bottom: 30px;
+        }
+
+        .setup-step {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+            padding: 10px;
+            border-radius: 8px;
+            transition: background-color 0.3s ease;
+        }
+
+        .setup-step.completed {
+            background: rgba(76, 175, 80, 0.1);
+        }
+
+        .setup-step.active {
+            background: rgba(33, 150, 243, 0.1);
+        }
+
+        .step-icon {
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 15px;
+            font-size: 0.9rem;
+            font-weight: bold;
+        }
+
+        .step-icon.pending {
+            background: #e0e0e0;
+            color: #999;
+        }
+
+        .step-icon.active {
+            background: #2196F3;
+            color: white;
+        }
+
+        .step-icon.completed {
+            background: #4CAF50;
+            color: white;
+        }
+
+        .step-text {
+            flex: 1;
+        }
+
+        .step-title {
+            font-weight: 600;
+            margin-bottom: 3px;
+        }
+
+        .step-description {
+            font-size: 0.9rem;
+            color: #666;
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            margin-top: 30px;
+        }
+
+        .setup-button {
+            padding: 15px 30px;
+            border: none;
+            border-radius: 50px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .setup-button.primary {
+            background: linear-gradient(45deg, #FF6B6B, #FF8E53);
+            color: white;
+            box-shadow: 0 10px 30px rgba(255, 107, 107, 0.4);
+        }
+
+        .setup-button.primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(255, 107, 107, 0.6);
+        }
+
+        .setup-button.secondary {
+            background: linear-gradient(45deg, #4ECDC4, #44A08D);
+            color: white;
+            box-shadow: 0 10px 30px rgba(78, 205, 196, 0.4);
+        }
+
+        .setup-button.secondary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(78, 205, 196, 0.6);
+        }
+
+        .setup-button:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+
+        .loading-spinner {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 2px solid #ffffff;
+            border-radius: 50%;
+            border-top-color: transparent;
+            animation: spin 1s ease-in-out infinite;
+            margin-right: 10px;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        .success-message, .error-message {
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            font-weight: 500;
+        }
+
+        .success-message {
+            background: rgba(76, 175, 80, 0.1);
+            border: 1px solid #4CAF50;
+            color: #2E7D32;
+        }
+
+        .error-message {
+            background: rgba(244, 67, 54, 0.1);
+            border: 1px solid #f44336;
+            color: #c62828;
+        }
+
+        .installation-details {
+            background: #f8f9fa;
+            border-radius: 10px;
+            padding: 20px;
+            margin-top: 20px;
+            text-align: left;
+        }
+
+        .detail-item {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        .detail-item:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+            padding-bottom: 0;
+        }
+
+        .detail-label {
+            font-weight: 600;
+            color: #333;
+        }
+
+        .detail-value {
+            color: #666;
+        }
+
+        @media (max-width: 768px) {
+            .setup-container {
+                margin: 10px;
+                padding: 30px 20px;
+            }
+            
+            .setup-title {
+                font-size: 2rem;
+            }
+            
+            .action-buttons {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="setup-container">
+        <div class="setup-header">
+            <h1 class="setup-title">📚 Setting Up AndyLibrary</h1>
+            <p class="setup-subtitle">Installing your educational digital library</p>
+            
+            <div class="mission-reminder">
+                "Getting education into the hands of people who can least afford it"
+            </div>
+        </div>
+
+        <div class="setup-progress">
+            <div class="progress-bar">
+                <div class="progress-fill" id="progress-fill"></div>
+            </div>
+            <div class="progress-text" id="progress-text">Preparing installation...</div>
+        </div>
+
+        <div class="setup-steps">
+            <div class="setup-step" id="step-1">
+                <div class="step-icon pending" id="icon-1">1</div>
+                <div class="step-text">
+                    <div class="step-title">Download Database</div>
+                    <div class="step-description">Downloading educational content (10.2MB)</div>
+                </div>
+            </div>
+
+            <div class="setup-step" id="step-2">
+                <div class="step-icon pending" id="icon-2">2</div>
+                <div class="step-text">
+                    <div class="step-title">Install Application Files</div>
+                    <div class="step-description">Copying AndyLibrary to your system</div>
+                </div>
+            </div>
+
+            <div class="setup-step" id="step-3">
+                <div class="step-icon pending" id="icon-3">3</div>
+                <div class="step-text">
+                    <div class="step-title">Create Configuration</div>
+                    <div class="step-description">Setting up your personal library settings</div>
+                </div>
+            </div>
+
+            <div class="setup-step" id="step-4">
+                <div class="step-icon pending" id="icon-4">4</div>
+                <div class="step-text">
+                    <div class="step-title">Create Desktop Shortcut</div>
+                    <div class="step-description">Adding AndyLibrary to your desktop</div>
+                </div>
+            </div>
+        </div>
+
+        <div id="messages"></div>
+
+        <div class="action-buttons">
+            <button class="setup-button primary" id="install-button" onclick="startInstallation()">
+                🚀 Install AndyLibrary
+            </button>
+            <button class="setup-button secondary" id="launch-button" onclick="launchApplication()" style="display: none;">
+                📚 Launch Library
+            </button>
+        </div>
+
+        <div id="installation-details" class="installation-details" style="display: none;"></div>
+    </div>
+
+    <script>
+        let installationComplete = false;
+        let currentStep = 0;
+
+        // Platform detection
+        function detectPlatform() {
+            const userAgent = navigator.userAgent.toLowerCase();
+            const platform = navigator.platform.toLowerCase();
+            
+            if (userAgent.includes('android')) {
+                return 'android';
+            } else if (platform.includes('win') || userAgent.includes('windows')) {
+                return 'windows';
+            } else if (platform.includes('mac') || userAgent.includes('mac os')) {
+                return 'darwin';
+            } else if (platform.includes('linux') || userAgent.includes('linux')) {
+                return 'linux';
+            } else {
+                return 'unknown';
+            }
+        }
+
+        function getPlatformInfo() {
+            const platformType = detectPlatform();
+            const platformInfo = {
+                android: {
+                    name: 'Android',
+                    icon: '🤖',
+                    instructions: [
+                        'Install using Termux or Android terminal app',
+                        'Use Termux widget for quick access',
+                        'Access via browser at localhost:8080'
+                    ]
+                },
+                windows: {
+                    name: 'Windows',
+                    icon: '🪟',
+                    instructions: [
+                        'Desktop shortcuts created (.bat, .ps1, .vbs)',
+                        'Double-click batch file for standard launch',
+                        'Right-click PowerShell script for modern interface'
+                    ]
+                },
+                darwin: {
+                    name: 'macOS',
+                    icon: '🍎',
+                    instructions: [
+                        'Application shortcut created in Applications folder',
+                        'Launch from Spotlight or Applications',
+                        'Terminal script available for command line'
+                    ]
+                },
+                linux: {
+                    name: 'Linux',
+                    icon: '🐧',
+                    instructions: [
+                        'Desktop shortcut created (.desktop file)',
+                        'Available in application menu',
+                        'Launch from terminal with generated script'
+                    ]
+                },
+                unknown: {
+                    name: 'Unknown Platform',
+                    icon: '❓',
+                    instructions: [
+                        'Platform-specific shortcuts may not be available',
+                        'Use browser at localhost:8080',
+                        'Run from command line: python StartAndyGoogle.py'
+                    ]
+                }
+            };
+            
+            return platformInfo[platformType] || platformInfo.unknown;
+        }
+
+        // Check if already installed on page load
+        window.addEventListener('load', function() {
+            checkInstallationStatus();
+            updatePlatformInfo();
+        });
+
+        function updatePlatformInfo() {
+            const platform = getPlatformInfo();
+            document.title = `AndyLibrary Setup - Installing on ${platform.name}`;
+            
+            // Update the setup container with platform-specific information
+            const setupHeader = document.querySelector('.setup-header');
+            if (setupHeader) {
+                const platformIndicator = document.createElement('div');
+                platformIndicator.style.cssText = `
+                    background: rgba(102, 126, 234, 0.1);
+                    border: 1px solid rgba(102, 126, 234, 0.3);
+                    border-radius: 8px;
+                    padding: 10px;
+                    margin-bottom: 20px;
+                    font-size: 14px;
+                `;
+                platformIndicator.innerHTML = `
+                    <strong>${platform.icon} Detected Platform: ${platform.name}</strong>
+                    <div style="margin-top: 8px; font-size: 12px; opacity: 0.8;">
+                        Platform-specific shortcuts and launchers will be created
+                    </div>
+                `;
+                setupHeader.appendChild(platformIndicator);
+            }
+        }
+
+        async function checkInstallationStatus() {
+            try {
+                const response = await fetch('/api/setup/status', {
+                    headers: {
+                        'Authorization': `Bearer ${localStorage.getItem('auth_token')}`
+                    }
+                });
+                
+                const data = await response.json();
+                
+                if (data.installed) {
+                    showAlreadyInstalled(data);
+                }
+            } catch (error) {
+                console.log('Status check failed:', error);
+            }
+        }
+
+        function showAlreadyInstalled(data) {
+            document.getElementById('progress-text').textContent = 'AndyLibrary is already installed!';
+            document.getElementById('progress-fill').style.width = '100%';
+            
+            // Mark all steps as completed
+            for (let i = 1; i <= 4; i++) {
+                const step = document.getElementById(`step-${i}`);
+                const icon = document.getElementById(`icon-${i}`);
+                step.classList.add('completed');
+                icon.classList.remove('pending');
+                icon.classList.add('completed');
+                icon.textContent = '✓';
+            }
+            
+            document.getElementById('install-button').style.display = 'none';
+            document.getElementById('launch-button').style.display = 'inline-flex';
+            
+            showSuccess('AndyLibrary is already installed on your system. You can launch it directly!');
+            
+            showInstallationDetails({
+                installation_path: data.installation_path,
+                database_path: data.database_path,
+                installed_at: data.installed_at,
+                database_version: data.database_version
+            });
+        }
+
+        async function startInstallation() {
+            const installButton = document.getElementById('install-button');
+            const launchButton = document.getElementById('launch-button');
+            
+            // Disable install button and show loading
+            installButton.disabled = true;
+            installButton.innerHTML = '<span class="loading-spinner"></span>Installing...';
+            
+            try {
+                // Start installation
+                const response = await fetch('/api/setup/install', {
+                    method: 'POST',
+                    headers: {
+                        'Authorization': `Bearer ${localStorage.getItem('auth_token')}`,
+                        'Content-Type': 'application/json'
+                    }
+                });
+                
+                const data = await response.json();
+                
+                if (response.ok && data.success) {
+                    // Simulate progress through steps
+                    await simulateInstallationProgress(data.installation_details.setup_steps);
+                    
+                    installationComplete = true;
+                    installButton.style.display = 'none';
+                    launchButton.style.display = 'inline-flex';
+                    
+                    showSuccess(data.message);
+                    showInstallationDetails(data.installation_details);
+                    
+                } else {
+                    throw new Error(data.detail || data.error || 'Installation failed');
+                }
+                
+            } catch (error) {
+                console.error('Installation error:', error);
+                showError(`Installation failed: ${error.message}`);
+                
+                // Re-enable install button
+                installButton.disabled = false;
+                installButton.innerHTML = '🚀 Install AndyLibrary';
+            }
+        }
+
+        async function simulateInstallationProgress(setupSteps) {
+            const steps = [
+                'Database Download',
+                'Application Files',
+                'User Configuration',
+                'Desktop Shortcut'
+            ];
+            
+            for (let i = 0; i < steps.length; i++) {
+                const stepNumber = i + 1;
+                const step = document.getElementById(`step-${stepNumber}`);
+                const icon = document.getElementById(`icon-${stepNumber}`);
+                
+                // Mark as active
+                step.classList.add('active');
+                icon.classList.remove('pending');
+                icon.classList.add('active');
+                
+                // Update progress
+                const progress = ((i + 1) / steps.length) * 100;
+                document.getElementById('progress-fill').style.width = `${progress}%`;
+                document.getElementById('progress-text').textContent = `${steps[i]}...`;
+                
+                // Simulate work time
+                await new Promise(resolve => setTimeout(resolve, 1000));
+                
+                // Mark as completed
+                step.classList.remove('active');
+                step.classList.add('completed');
+                icon.classList.remove('active');
+                icon.classList.add('completed');
+                icon.textContent = '✓';
+            }
+            
+            document.getElementById('progress-text').textContent = 'Installation complete!';
+        }
+
+        async function launchApplication() {
+            const launchButton = document.getElementById('launch-button');
+            
+            // Show loading
+            launchButton.disabled = true;
+            launchButton.innerHTML = '<span class="loading-spinner"></span>Launching...';
+            
+            try {
+                const response = await fetch('/api/setup/launch', {
+                    method: 'POST',
+                    headers: {
+                        'Authorization': `Bearer ${localStorage.getItem('auth_token')}`,
+                        'Content-Type': 'application/json'
+                    }
+                });
+                
+                const data = await response.json();
+                
+                if (response.ok && data.success) {
+                    showSuccess('🎉 AndyLibrary launched successfully! The native app is now running. You can close this browser window.');
+                    
+                    // Optional: Auto-close the browser window after a delay
+                    setTimeout(() => {
+                        if (confirm('AndyLibrary is now running. Close this browser window?')) {
+                            window.close();
+                        }
+                    }, 3000);
+                    
+                } else {
+                    throw new Error(data.detail || data.error || 'Launch failed');
+                }
+                
+            } catch (error) {
+                console.error('Launch error:', error);
+                showError(`Launch failed: ${error.message}`);
+                
+                // Re-enable launch button
+                launchButton.disabled = false;
+                launchButton.innerHTML = '📚 Launch Library';
+            }
+        }
+
+        function showSuccess(message) {
+            const messagesDiv = document.getElementById('messages');
+            messagesDiv.innerHTML = `<div class="success-message">${message}</div>`;
+        }
+
+        function showError(message) {
+            const messagesDiv = document.getElementById('messages');
+            messagesDiv.innerHTML = `<div class="error-message">${message}</div>`;
+        }
+
+        function showInstallationDetails(details) {
+            const platform = getPlatformInfo();
+            const detailsDiv = document.getElementById('installation-details');
+            
+            let detailsHTML = `<h3 style="margin-bottom: 15px; color: #333;">${platform.icon} Installation Details</h3>`;
+            
+            if (details.installation_path) {
+                detailsHTML += `
+                    <div class="detail-item">
+                        <span class="detail-label">Installation Path:</span>
+                        <span class="detail-value">${details.installation_path}</span>
+                    </div>
+                `;
+            }
+            
+            if (details.database_size) {
+                detailsHTML += `
+                    <div class="detail-item">
+                        <span class="detail-label">Database Size:</span>
+                        <span class="detail-value">${details.database_size} MB</span>
+                    </div>
+                `;
+            }
+            
+            if (details.database_version) {
+                detailsHTML += `
+                    <div class="detail-item">
+                        <span class="detail-label">Database Version:</span>
+                        <span class="detail-value">${details.database_version}</span>
+                    </div>
+                `;
+            }
+            
+            if (details.installed_at) {
+                const installDate = new Date(details.installed_at).toLocaleDateString();
+                detailsHTML += `
+                    <div class="detail-item">
+                        <span class="detail-label">Installed:</span>
+                        <span class="detail-value">${installDate}</span>
+                    </div>
+                `;
+            }
+            
+            // Add platform-specific shortcuts information
+            if (details.shortcuts_created && Array.isArray(details.shortcuts_created)) {
+                detailsHTML += `
+                    <div class="detail-item">
+                        <span class="detail-label">${platform.name} Shortcuts:</span>
+                        <div style="margin-top: 8px;">
+                            ${details.shortcuts_created.map(shortcut => 
+                                `<div style="font-family: monospace; font-size: 11px; background: #f5f5f5; padding: 4px 8px; margin: 2px 0; border-radius: 4px; word-break: break-all;">${shortcut}</div>`
+                            ).join('')}
+                        </div>
+                    </div>
+                `;
+            }
+            
+            // Add platform-specific launch instructions
+            if (platform.instructions && platform.instructions.length > 0) {
+                detailsHTML += `
+                    <div class="detail-item">
+                        <span class="detail-label">How to Launch:</span>
+                        <div style="margin-top: 8px;">
+                            <ul style="text-align: left; margin: 0; padding-left: 20px;">
+                                ${platform.instructions.map(instruction => `<li style="margin: 4px 0;">${instruction}</li>`).join('')}
+                            </ul>
+                        </div>
+                    </div>
+                `;
+            }
+            
+            // Add automatic port detection notice
+            detailsHTML += `
+                <div style="background: rgba(76, 175, 80, 0.1); border: 1px solid #4CAF50; border-radius: 8px; padding: 15px; margin-top: 15px;">
+                    <div style="font-weight: 600; color: #2E7D32; margin-bottom: 8px;">✅ Smart Port Detection Enabled</div>
+                    <div style="font-size: 14px; color: #2E7D32;">
+                        AndyLibrary automatically finds available ports (8080, 8081, 8082, etc.). No manual port configuration needed!
+                    </div>
+                </div>
+            `;
+            
+            detailsDiv.innerHTML = detailsHTML;
+            detailsDiv.style.display = 'block';
+        }
+    </script>
+</body>
+</html>
