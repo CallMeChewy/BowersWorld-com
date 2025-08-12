@@ -154,6 +154,14 @@
                     <p class="text-gray-400 mt-4 text-sm">
                         Already a member? <a href="#" onclick="showLogin()" class="text-blue-400 hover:text-blue-300 underline">Sign in here</a>
                     </p>
+                    <div class="mt-4 space-x-4">
+                        <button onclick="showVerificationEmail()" class="bg-gradient-to-r from-green-600 to-emerald-600 hover:from-green-700 hover:to-emerald-700 text-white font-bold py-2 px-4 rounded transition-all duration-300 text-sm">
+                            📧 View Last Email
+                        </button>
+                        <button onclick="clearAllAccounts()" class="bg-gradient-to-r from-red-600 to-red-700 hover:from-red-700 hover:to-red-800 text-white font-bold py-2 px-4 rounded transition-all duration-300 text-sm">
+                            🗑️ Clear All Accounts
+                        </button>
+                    </div>
                 </div>
             </div>
         </div>
@@ -455,6 +463,16 @@ For testing, you can copy the verification link above.`;
             }
         }
 
+        function clearAllAccounts() {
+            // Clear all stored registration data
+            localStorage.removeItem('registrations');
+            localStorage.removeItem('pendingRegistration');
+            localStorage.removeItem('lastVerificationEmail');
+            localStorage.removeItem('currentUser');
+            
+            alert('✅ All accounts cleared!\n\nYou can now register with any email address again.\n\nAll stored data has been removed from your browser.');
+        }
+
         function handleRegistration(event) {
             event.preventDefault();
             
@@ -538,16 +556,16 @@ For testing, you can copy the verification link above.`;
             const emailSent = sendVerificationEmail(userData);
             
             if (emailSent) {
-                // Show success message
-                alert(`✅ Registration successful for ${userData.email}!\n\n👋 Welcome, ${userData.firstName}!\n\n📧 Verification email sent!\n\nNext steps:\n1. Check your email inbox (and spam folder)\n2. Click the verification link in the email\n3. Return here to sign in to your library\n\nNote: You'll need to verify your email before accessing the library.`);
+                // Show success message first
+                alert(`✅ Registration successful for ${userData.email}!\n\n👋 Welcome, ${userData.firstName}!\n\n📧 Verification email is being prepared...\n\nClick OK to see your verification email.`);
                 
-                // Show the verification email content after the success message
-                setTimeout(() => {
-                    const emailContent = localStorage.getItem('lastVerificationEmail');
-                    if (emailContent) {
-                        alert(emailContent);
-                    }
-                }, 1000);
+                // Show the verification email content immediately after user clicks OK
+                const emailContent = localStorage.getItem('lastVerificationEmail');
+                if (emailContent) {
+                    alert(emailContent);
+                } else {
+                    alert('⚠️ Email content not found. Please try the "View Last Email" button below.');
+                }
             } else {
                 showValidationError('Registration completed but failed to send verification email. Please contact support.');
             }
