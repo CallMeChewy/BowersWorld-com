@@ -154,12 +154,18 @@
                     <p class="text-gray-400 mt-4 text-sm">
                         Already a member? <a href="#" onclick="showLogin()" class="text-blue-400 hover:text-blue-300 underline">Sign in here</a>
                     </p>
-                    <div class="mt-4 space-x-4">
-                        <button onclick="showVerificationEmail()" class="bg-gradient-to-r from-green-600 to-emerald-600 hover:from-green-700 hover:to-emerald-700 text-white font-bold py-2 px-4 rounded transition-all duration-300 text-sm">
-                            📧 View Last Email
+                    <div class="mt-4 space-x-2 text-center">
+                        <button onclick="showVerificationEmail()" class="bg-gradient-to-r from-green-600 to-emerald-600 hover:from-green-700 hover:to-emerald-700 text-white font-bold py-2 px-3 rounded transition-all duration-300 text-xs">
+                            📧 View Email
                         </button>
-                        <button onclick="clearAllAccounts()" class="bg-gradient-to-r from-red-600 to-red-700 hover:from-red-700 hover:to-red-800 text-white font-bold py-2 px-4 rounded transition-all duration-300 text-sm">
-                            🗑️ Clear All Accounts
+                        <button onclick="clearAllAccounts()" class="bg-gradient-to-r from-red-600 to-red-700 hover:from-red-700 hover:to-red-800 text-white font-bold py-2 px-3 rounded transition-all duration-300 text-xs">
+                            🗑️ Clear Accounts
+                        </button>
+                        <button onclick="emergencyClear()" class="bg-gradient-to-r from-orange-600 to-red-600 hover:from-orange-700 hover:to-red-700 text-white font-bold py-2 px-3 rounded transition-all duration-300 text-xs">
+                            🚨 Emergency Clear
+                        </button>
+                        <button onclick="showStoredData()" class="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white font-bold py-2 px-3 rounded transition-all duration-300 text-xs">
+                            🔍 Debug Data
                         </button>
                     </div>
                 </div>
@@ -465,12 +471,50 @@ For testing, you can copy the verification link above.`;
 
         function clearAllAccounts() {
             // Clear all stored registration data
+            localStorage.clear(); // Clear everything to be sure
+            
+            // Also explicitly remove known keys
             localStorage.removeItem('registrations');
             localStorage.removeItem('pendingRegistration');
             localStorage.removeItem('lastVerificationEmail');
             localStorage.removeItem('currentUser');
             
-            alert('✅ All accounts cleared!\n\nYou can now register with any email address again.\n\nAll stored data has been removed from your browser.');
+            // Verify it's cleared
+            const remaining = localStorage.getItem('registrations');
+            if (remaining) {
+                alert('❌ Failed to clear localStorage. Please manually clear your browser data.');
+                console.log('Remaining data:', remaining);
+            } else {
+                alert('✅ All accounts cleared!\n\nYou can now register with any email address again.\n\nAll stored data has been removed from your browser.');
+                console.log('localStorage cleared successfully');
+            }
+        }
+
+        // Add immediate clearing function for debugging
+        function emergencyClear() {
+            localStorage.clear();
+            sessionStorage.clear();
+            alert('🚨 EMERGENCY CLEAR: All browser storage cleared!\n\nTry registration again.');
+        }
+
+        // Debug function to show stored data
+        function showStoredData() {
+            const registrations = localStorage.getItem('registrations');
+            const pending = localStorage.getItem('pendingRegistration');
+            const email = localStorage.getItem('lastVerificationEmail');
+            
+            let message = '🔍 STORED DATA DEBUG:\n\n';
+            message += `Registrations: ${registrations ? JSON.parse(registrations).length + ' accounts' : 'None'}\n`;
+            message += `Pending: ${pending ? 'Yes' : 'None'}\n`;
+            message += `Last Email: ${email ? 'Yes' : 'None'}\n\n`;
+            
+            if (registrations) {
+                const parsed = JSON.parse(registrations);
+                message += 'Registered Emails:\n';
+                parsed.forEach(reg => message += `• ${reg.email}\n`);
+            }
+            
+            alert(message);
         }
 
         function handleRegistration(event) {
@@ -640,3 +684,4 @@ For testing, you can copy the verification link above.`;
     </script>
 </body>
 </html>
+<!-- FORCE DEPLOYMENT Tue Aug 12 01:13:57 PM EDT 2025 -->
