@@ -416,16 +416,10 @@
             
             // Simulate email content (in real app, this would be sent via email service)
             const verificationUrl = `${window.location.origin}${window.location.pathname}?verify=${verificationToken}`;
-            console.log('Verification email would contain:', {
-                to: userData.email,
-                subject: 'Verify your OurLibrary account',
-                verificationLink: verificationUrl
-            });
             
-            // Show simulated email in console for testing
-            console.log(`
-===== VERIFICATION EMAIL (Demo) =====
-To: ${userData.email}
+            // Store email content for user to see
+            const emailContent = `📧 VERIFICATION EMAIL SENT TO ${userData.email}
+
 Subject: Verify your OurLibrary account
 
 Hello ${userData.firstName}!
@@ -438,10 +432,27 @@ If you didn't create an account, please ignore this email.
 
 Best regards,
 The OurLibrary Team
-=====================================
-            `);
+
+---
+⚠️ DEMO MODE: In production, this email would be sent to your inbox. 
+For testing, you can copy the verification link above.`;
+            
+            // Store the email content so we can show it to the user
+            localStorage.setItem('lastVerificationEmail', emailContent);
+            
+            // Also log to console for debugging
+            console.log('Verification email content stored:', emailContent);
             
             return true;
+        }
+
+        function showVerificationEmail() {
+            const emailContent = localStorage.getItem('lastVerificationEmail');
+            if (emailContent) {
+                alert(emailContent);
+            } else {
+                alert('No verification email found. Please register first.');
+            }
         }
 
         function handleRegistration(event) {
@@ -529,6 +540,14 @@ The OurLibrary Team
             if (emailSent) {
                 // Show success message
                 alert(`✅ Registration successful for ${userData.email}!\n\n👋 Welcome, ${userData.firstName}!\n\n📧 Verification email sent!\n\nNext steps:\n1. Check your email inbox (and spam folder)\n2. Click the verification link in the email\n3. Return here to sign in to your library\n\nNote: You'll need to verify your email before accessing the library.`);
+                
+                // Show the verification email content after the success message
+                setTimeout(() => {
+                    const emailContent = localStorage.getItem('lastVerificationEmail');
+                    if (emailContent) {
+                        alert(emailContent);
+                    }
+                }, 1000);
             } else {
                 showValidationError('Registration completed but failed to send verification email. Please contact support.');
             }
