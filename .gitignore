@@ -82,4 +82,5 @@ coverage.xml
 Books/
 Covers/
 Thumbs/
+Data/Books
 node_modules/
