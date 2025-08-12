@@ -1275,7 +1275,7 @@ class DesktopLibraryInterface {
                     </div>
                     <div class="startup-title">Anderson's Library</div>
                     <div class="startup-subtitle">Professional Edition</div>
-                    <div class="startup-description">Another Intuitive Product<br>from the folks at<br><strong>BowersWorld.com</strong></div>
+                    <div class="startup-description">Another Intuitive Product<br>from<br><strong>Anderson's Digital Library</strong></div>
                     <div class="startup-footer">
                         <div class="startup-copyright">© 2025</div>
                         <div class="startup-version">Design Standard v2.1</div>
@@ -1301,7 +1301,7 @@ class DesktopLibraryInterface {
                 <hr>
                 <p>Another Intuitive Product</p>
                 <p>from the folks at</p>
-                <p><strong>BowersWorld.com</strong></p>
+                <p><strong>Anderson's Digital Library</strong></p>
                 <hr>
                 <p>© 2025</p>
                 <p>Design Standard v2.1</p>
