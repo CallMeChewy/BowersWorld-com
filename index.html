@@ -3,20 +3,538 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>BowersWorld.com - AndyLibrary</title>
-    <meta http-equiv="refresh" content="0;url=bowersworld.html">
-    <link rel="canonical" href="bowersworld.html">
+    <title>OurLibrary - Getting Education Into the Hands of People Who Can Least Afford It</title>
+    <script src="https://unpkg.com/@tailwindcss/browser@4"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            margin: 0;
+            background-color: #0f172a; /* Darker background */
+        }
+        
+        .banner-container {
+            width: 100%;
+            height: 256px; /* Adjusted to match exact image height */
+            overflow: hidden;
+            position: relative;
+            display: flex;
+            align-items: center; /* Centers the image vertically */
+        }
+        
+        .banner-image {
+            width: 100%;
+            object-fit: contain; /* Changed to contain to avoid cropping */
+            max-height: 100%;
+        }
+        
+        .jumbotron {
+            background: linear-gradient(to bottom, rgba(15, 23, 42, 0.7), #0f172a);
+            padding: 2rem 0;
+        }
+        
+        .category-card {
+            background: rgba(30, 41, 59, 0.8);
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+            backdrop-filter: blur(8px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            transition: all 0.3s ease;
+        }
+        
+        .category-card:hover {
+            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.3);
+            transform: translateY(-3px);
+        }
+        
+        .document-list {
+            display: none;
+            list-style: none;
+            padding: 0;
+            margin: 1rem 0 0 0;
+            background: rgba(15, 23, 42, 0.9);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        
+        .document-list.active {
+            display: block;
+        }
+        
+        .document-item {
+            padding: 0.75rem 1rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            color: #cbd5e1;
+            cursor: pointer;
+            transition: background-color 0.2s ease;
+        }
+        
+        .document-item:hover {
+            background-color: rgba(79, 70, 229, 0.2);
+            color: #ffffff;
+        }
+        
+        .document-item:last-child {
+            border-bottom: none;
+        }
+        
+        .category-toggle {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            color: #f8fafc;
+            cursor: pointer;
+            font-weight: 600;
+        }
+        
+        .category-toggle .icon {
+            transition: transform 0.3s ease;
+        }
+        
+        .rotate-icon {
+            transform: rotate(180deg);
+        }
+        
+        .gradient-text {
+            background: linear-gradient(to right, #8b5cf6, #d946ef);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+        
+        .attribution {
+            background-color: rgba(0, 0, 0, 0.5);
+            text-align: center;
+            padding: 0.25rem;
+            font-size: 0.75rem;
+            color: rgba(255, 255, 255, 0.7);
+        }
+    </style>
 </head>
 <body>
-    <script>
-        // Immediate redirect to main page
-        window.location.replace('bowersworld.html');
-    </script>
-    
-    <div style="text-align: center; font-family: Arial, sans-serif; margin-top: 100px;">
-        <h1>BowersWorld.com</h1>
-        <p>Redirecting to AndyLibrary...</p>
-        <p><a href="bowersworld.html">Click here if not redirected automatically</a></p>
+    <!-- Attribution Banner -->
+    <div class="attribution">
+        Sponsored by BowersWorld.com
     </div>
+
+    <!-- Banner Image -->
+    <div class="banner-container">
+        <img src="Resources/Images/ProjectHimalayaBanner.png" alt="Project Himalaya - Human and AI collaboration" class="banner-image">
+    </div>
+
+    <!-- Main Content -->
+    <div class="container mx-auto px-4 py-8">
+        <!-- Project Name and Mission -->
+        <div class="text-center mb-12">
+            <h1 class="text-5xl font-bold text-white mb-6">OurLibrary</h1>
+            <div class="max-w-4xl mx-auto">
+                <h2 class="text-2xl text-yellow-400 font-semibold mb-6">
+                    "Getting education into the hands of people who can least afford it"
+                </h2>
+                <p class="text-xl text-gray-300 leading-relaxed mb-6">
+                    OurLibrary is a free digital library platform providing access to thousands of educational 
+                    books and resources. Our mission is to break down barriers to education by offering 
+                    completely free access to quality educational content for students worldwide.
+                </p>
+                <p class="text-lg text-gray-400 leading-relaxed mb-8">
+                    From elementary school textbooks to university-level research materials, we believe 
+                    that knowledge should be accessible to everyone, regardless of economic circumstances. 
+                    Join our community of learners and educators working together to democratize education.
+                </p>
+                
+                <!-- Call to Action Button -->
+                <div class="mb-12">
+                    <button onclick="showRegistration()" class="bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white font-bold py-4 px-8 rounded-lg text-xl transition-all duration-300 transform hover:scale-105 shadow-lg">
+                        📚 Join Our Library - It's Free!
+                    </button>
+                    <p class="text-gray-400 mt-4 text-sm">
+                        Already a member? <a href="#" onclick="showLogin()" class="text-blue-400 hover:text-blue-300 underline">Sign in here</a>
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Library Features -->
+        <h2 class="text-2xl font-bold text-white mb-8 text-center gradient-text">What's In Our Library</h2>
+        
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
+            <!-- Educational Materials -->
+            <div class="category-card text-center">
+                <div class="text-4xl mb-4">📚</div>
+                <h3 class="text-xl font-semibold mb-3 text-white">Educational Books</h3>
+                <p class="text-gray-300 text-sm">
+                    Thousands of textbooks, workbooks, and educational resources covering all subjects and grade levels.
+                </p>
+            </div>
+            
+            <!-- Multi-Language Support -->
+            <div class="category-card text-center">
+                <div class="text-4xl mb-4">🌍</div>
+                <h3 class="text-xl font-semibold mb-3 text-white">Multiple Languages</h3>
+                <p class="text-gray-300 text-sm">
+                    Books and materials available in multiple languages to serve diverse global communities.
+                </p>
+            </div>
+            
+            <!-- Offline Access -->
+            <div class="category-card text-center">
+                <div class="text-4xl mb-4">📱</div>
+                <h3 class="text-xl font-semibold mb-3 text-white">Offline Access</h3>
+                <p class="text-gray-300 text-sm">
+                    Download books for offline reading - perfect for areas with limited internet connectivity.
+                </p>
+            </div>
+        </div>
+
+        <!-- Registration/Login Modal Background -->
+        <div id="modal-background" class="fixed inset-0 bg-black bg-opacity-50 z-40 hidden" onclick="hideModal()"></div>
+        
+        <!-- Registration Form -->
+        <div id="registration-form" class="fixed inset-0 flex items-center justify-center z-50 hidden">
+            <div class="bg-gray-800 p-8 rounded-lg max-w-md w-full mx-4 max-h-screen overflow-y-auto">
+                <h2 class="text-2xl font-bold text-white mb-6 text-center">Join OurLibrary</h2>
+                <form id="register-form" onsubmit="handleRegistration(event)">
+                    <div class="space-y-4">
+                        <div>
+                            <label class="block text-gray-300 text-sm font-bold mb-2">Username *</label>
+                            <input type="text" name="username" required class="w-full px-3 py-2 bg-gray-700 text-white rounded focus:outline-none focus:ring-2 focus:ring-purple-500">
+                        </div>
+                        <div>
+                            <label class="block text-gray-300 text-sm font-bold mb-2">Email Address *</label>
+                            <input type="email" name="email" required class="w-full px-3 py-2 bg-gray-700 text-white rounded focus:outline-none focus:ring-2 focus:ring-purple-500">
+                        </div>
+                        <div>
+                            <label class="block text-gray-300 text-sm font-bold mb-2">First Name *</label>
+                            <input type="text" name="firstName" required class="w-full px-3 py-2 bg-gray-700 text-white rounded focus:outline-none focus:ring-2 focus:ring-purple-500">
+                        </div>
+                        <div>
+                            <label class="block text-gray-300 text-sm font-bold mb-2">Last Name *</label>
+                            <input type="text" name="lastName" required class="w-full px-3 py-2 bg-gray-700 text-white rounded focus:outline-none focus:ring-2 focus:ring-purple-500">
+                        </div>
+                        <div>
+                            <label class="block text-gray-300 text-sm font-bold mb-2">Zip Code</label>
+                            <input type="text" name="zipCode" class="w-full px-3 py-2 bg-gray-700 text-white rounded focus:outline-none focus:ring-2 focus:ring-purple-500">
+                        </div>
+                        <div>
+                            <label class="flex items-center">
+                                <input type="checkbox" name="agreeTerms" required class="mr-2">
+                                <span class="text-gray-300 text-sm">I agree to the <a href="#" class="text-blue-400 hover:text-blue-300 underline" onclick="showTerms()">Terms of Service</a> *</span>
+                            </label>
+                        </div>
+                    </div>
+                    
+                    <div class="mt-6">
+                        <button type="submit" class="w-full bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white font-bold py-2 px-4 rounded transition-all duration-300">
+                            Register for Free Access
+                        </button>
+                    </div>
+                    
+                    <div class="mt-4 text-center">
+                        <p class="text-gray-400 text-sm mb-4">Or register with:</p>
+                        <div class="space-y-2">
+                            <button type="button" onclick="registerWithGoogle()" class="w-full bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-4 rounded transition-all duration-300">
+                                📧 Register with Google
+                            </button>
+                            <button type="button" onclick="registerWithGitHub()" class="w-full bg-gray-700 hover:bg-gray-600 text-white font-bold py-2 px-4 rounded transition-all duration-300">
+                                🐙 Register with GitHub
+                            </button>
+                            <button type="button" onclick="registerWithFacebook()" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded transition-all duration-300">
+                                📘 Register with Facebook
+                            </button>
+                        </div>
+                    </div>
+                </form>
+                
+                <div class="mt-6 text-center">
+                    <button onclick="hideModal()" class="text-gray-400 hover:text-gray-300 underline">Cancel</button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Login Form -->
+        <div id="login-form" class="fixed inset-0 flex items-center justify-center z-50 hidden">
+            <div class="bg-gray-800 p-8 rounded-lg max-w-md w-full mx-4">
+                <h2 class="text-2xl font-bold text-white mb-6 text-center">Sign In to OurLibrary</h2>
+                <form id="signin-form" onsubmit="handleLogin(event)">
+                    <div class="space-y-4">
+                        <div>
+                            <label class="block text-gray-300 text-sm font-bold mb-2">Email Address</label>
+                            <input type="email" name="email" required class="w-full px-3 py-2 bg-gray-700 text-white rounded focus:outline-none focus:ring-2 focus:ring-purple-500">
+                        </div>
+                        <div>
+                            <label class="block text-gray-300 text-sm font-bold mb-2">Password</label>
+                            <input type="password" name="password" required class="w-full px-3 py-2 bg-gray-700 text-white rounded focus:outline-none focus:ring-2 focus:ring-purple-500">
+                        </div>
+                    </div>
+                    
+                    <div class="mt-6">
+                        <button type="submit" class="w-full bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white font-bold py-2 px-4 rounded transition-all duration-300">
+                            Sign In
+                        </button>
+                    </div>
+                    
+                    <div class="mt-4 text-center">
+                        <p class="text-gray-400 text-sm mb-4">Or sign in with:</p>
+                        <div class="space-y-2">
+                            <button type="button" onclick="loginWithGoogle()" class="w-full bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-4 rounded transition-all duration-300">
+                                📧 Sign in with Google
+                            </button>
+                            <button type="button" onclick="loginWithGitHub()" class="w-full bg-gray-700 hover:bg-gray-600 text-white font-bold py-2 px-4 rounded transition-all duration-300">
+                                🐙 Sign in with GitHub
+                            </button>
+                            <button type="button" onclick="loginWithFacebook()" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded transition-all duration-300">
+                                📘 Sign in with Facebook
+                            </button>
+                        </div>
+                    </div>
+                </form>
+                
+                <div class="mt-6 text-center">
+                    <p class="text-gray-400 text-sm">
+                        Don't have an account? 
+                        <a href="#" onclick="showRegistrationFromLogin()" class="text-blue-400 hover:text-blue-300 underline">Register here</a>
+                    </p>
+                    <button onclick="hideModal()" class="text-gray-400 hover:text-gray-300 underline mt-2">Cancel</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 py-4 border-t border-gray-800">
+        <div class="container mx-auto px-4 text-center text-gray-500">
+            &copy; 2025 OurLibrary - Getting education into the hands of people who can least afford it. Sponsored by BowersWorld.com
+        </div>
+    </footer>
+
+    <script>
+        // Modal Management
+        function showRegistration() {
+            document.getElementById('modal-background').classList.remove('hidden');
+            document.getElementById('registration-form').classList.remove('hidden');
+            document.getElementById('login-form').classList.add('hidden');
+        }
+        
+        function showLogin() {
+            document.getElementById('modal-background').classList.remove('hidden');
+            document.getElementById('login-form').classList.remove('hidden');
+            document.getElementById('registration-form').classList.add('hidden');
+        }
+        
+        function showRegistrationFromLogin() {
+            document.getElementById('login-form').classList.add('hidden');
+            document.getElementById('registration-form').classList.remove('hidden');
+        }
+        
+        function hideModal() {
+            document.getElementById('modal-background').classList.add('hidden');
+            document.getElementById('registration-form').classList.add('hidden');
+            document.getElementById('login-form').classList.add('hidden');
+        }
+        
+        // Form Validation Functions
+        function validateEmail(email) {
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            return emailRegex.test(email);
+        }
+        
+        function validateUsername(username) {
+            // Username: 3-20 characters, letters, numbers, underscore only
+            const usernameRegex = /^[a-zA-Z0-9_]{3,20}$/;
+            return usernameRegex.test(username);
+        }
+        
+        function validateName(name) {
+            // Name: 2-50 characters, letters and spaces only
+            const nameRegex = /^[a-zA-Z\s]{2,50}$/;
+            return nameRegex.test(name.trim());
+        }
+        
+        function validateZipCode(zipCode) {
+            if (!zipCode) return true; // Optional field
+            // Support multiple formats: 12345, 12345-6789, A1A 1A1 (Canadian), etc.
+            const zipRegex = /^[a-zA-Z0-9\s-]{3,10}$/;
+            return zipRegex.test(zipCode);
+        }
+        
+        function showValidationError(message) {
+            // Remove any existing error message
+            const existingError = document.getElementById('validation-error');
+            if (existingError) {
+                existingError.remove();
+            }
+            
+            // Create new error message
+            const errorDiv = document.createElement('div');
+            errorDiv.id = 'validation-error';
+            errorDiv.className = 'bg-red-600 text-white p-3 rounded mb-4 text-sm';
+            errorDiv.textContent = message;
+            
+            // Insert at top of form
+            const form = document.getElementById('register-form');
+            form.insertBefore(errorDiv, form.firstChild);
+            
+            // Auto-remove after 5 seconds
+            setTimeout(() => {
+                if (errorDiv.parentNode) {
+                    errorDiv.remove();
+                }
+            }, 5000);
+        }
+        
+        // Form Handlers
+        function handleRegistration(event) {
+            event.preventDefault();
+            
+            // Remove any existing error messages
+            const existingError = document.getElementById('validation-error');
+            if (existingError) {
+                existingError.remove();
+            }
+            
+            const formData = new FormData(event.target);
+            const username = formData.get('username').trim();
+            const email = formData.get('email').trim().toLowerCase();
+            const firstName = formData.get('firstName').trim();
+            const lastName = formData.get('lastName').trim();
+            const zipCode = formData.get('zipCode').trim();
+            const agreeTerms = formData.get('agreeTerms');
+            
+            // Validation
+            if (!validateUsername(username)) {
+                showValidationError('Username must be 3-20 characters, letters, numbers, and underscores only.');
+                return;
+            }
+            
+            if (!validateEmail(email)) {
+                showValidationError('Please enter a valid email address.');
+                return;
+            }
+            
+            if (!validateName(firstName)) {
+                showValidationError('First name must be 2-50 characters, letters only.');
+                return;
+            }
+            
+            if (!validateName(lastName)) {
+                showValidationError('Last name must be 2-50 characters, letters only.');
+                return;
+            }
+            
+            if (!validateZipCode(zipCode)) {
+                showValidationError('Please enter a valid zip/postal code.');
+                return;
+            }
+            
+            if (!agreeTerms) {
+                showValidationError('You must agree to the Terms of Service to continue.');
+                return;
+            }
+            
+            // Check if user already registered
+            const existingRegistrations = JSON.parse(localStorage.getItem('registrations') || '[]');
+            if (existingRegistrations.find(reg => reg.email === email)) {
+                showValidationError('An account with this email already exists. Please sign in instead.');
+                return;
+            }
+            
+            if (existingRegistrations.find(reg => reg.username === username)) {
+                showValidationError('This username is already taken. Please choose a different one.');
+                return;
+            }
+            
+            const userData = {
+                username: username,
+                email: email,
+                firstName: firstName,
+                lastName: lastName,
+                zipCode: zipCode,
+                agreeTerms: true,
+                registrationDate: new Date().toISOString(),
+                method: 'email',
+                verified: false,
+                id: Date.now().toString()
+            };
+            
+            // Store user data
+            existingRegistrations.push(userData);
+            localStorage.setItem('registrations', JSON.stringify(existingRegistrations));
+            localStorage.setItem('pendingRegistration', JSON.stringify(userData));
+            
+            // Show success message
+            alert(`✅ Registration successful for ${userData.email}!\n\n👋 Welcome, ${userData.firstName}!\n\nNext steps:\n1. Check your email for verification link\n2. Click the link to verify your account\n3. Return here to access your library\n\nNote: This is a demo - email verification will be implemented in the next phase.`);
+            
+            // Clear form
+            event.target.reset();
+            hideModal();
+        }
+        
+        function handleLogin(event) {
+            event.preventDefault();
+            const formData = new FormData(event.target);
+            const email = formData.get('email').trim().toLowerCase();
+            const password = formData.get('password');
+            
+            // Check if user exists in registrations
+            const registrations = JSON.parse(localStorage.getItem('registrations') || '[]');
+            const user = registrations.find(reg => reg.email === email);
+            
+            if (user) {
+                if (!user.verified) {
+                    alert(`📧 Account found for ${user.firstName}!\n\nHowever, your email address hasn't been verified yet.\n\nPlease:\n1. Check your email for verification link\n2. Click the link to verify your account\n3. Return here to sign in\n\nNote: This is a demo - email verification will be implemented in the next phase.`);
+                } else {
+                    alert(`🎉 Welcome back, ${user.firstName}!\n\nRedirecting to your library...\n\nNote: This is a demo - library interface will be implemented in the next phase.`);
+                    
+                    // Store current user session
+                    localStorage.setItem('currentUser', JSON.stringify(user));
+                }
+                hideModal();
+                return;
+            }
+            
+            alert('❌ Email not found.\n\nPlease:\n• Check your email address\n• Register if you don\'t have an account\n• Ensure you\'ve completed registration');
+        }
+        
+        // Social Authentication Handlers (Placeholders)
+        function registerWithGoogle() {
+            alert('Google registration will be implemented in the next phase.\n\nThis will use Google OAuth for instant account creation.');
+        }
+        
+        function registerWithGitHub() {
+            alert('GitHub registration will be implemented in the next phase.\n\nThis will use GitHub OAuth for instant account creation.');
+        }
+        
+        function registerWithFacebook() {
+            alert('Facebook registration will be implemented in the next phase.\n\nThis will use Facebook OAuth for instant account creation.');
+        }
+        
+        function loginWithGoogle() {
+            alert('Google sign-in will be implemented in the next phase.');
+        }
+        
+        function loginWithGitHub() {
+            alert('GitHub sign-in will be implemented in the next phase.');
+        }
+        
+        function loginWithFacebook() {
+            alert('Facebook sign-in will be implemented in the next phase.');
+        }
+        
+        // Terms of Service
+        function showTerms() {
+            alert(`OurLibrary Terms of Service\n\n1. This is a free educational service\n2. You must be 13+ years old to register\n3. Respect copyright laws in your region\n4. Books are for educational use only\n5. We protect your privacy and data\n6. Service provided "as-is"\n\nFull terms will be available on a dedicated page.`);
+        }
+        
+        // Keyboard shortcut to close modal
+        document.addEventListener('keydown', function(event) {
+            if (event.key === 'Escape') {
+                hideModal();
+            }
+        });
+    </script>
 </body>
 </html>
