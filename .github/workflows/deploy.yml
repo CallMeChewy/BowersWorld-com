@@ -24,7 +24,8 @@ jobs:
       - name: Build
         run: |
           mkdir -p deploy
-          cp -r OurLibrary/BowersWorld.com/* deploy/
+          cp OurLibrary/BowersWorld.com/index.html deploy/index.html
+          ls -l deploy/
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
