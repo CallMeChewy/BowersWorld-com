@@ -2,6 +2,53 @@
 
 This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
+## 🚨 CRITICAL: Development Symlinks and GitHub Pages Deployment
+
+**LESSON LEARNED**: Symlinks in development projects can cause GitHub Pages deployment failures that are extremely time-consuming to debug.
+
+### The Problem
+- Development systems use symlinks to share resources (Standards, Common scripts, external data)
+- GitHub Actions fails during `tar` archiving when it encounters broken symlinks
+- Error: `tar: ./path/to/link: File removed before we read it` 
+- Result: Hours of debugging deployment failures
+
+### The Solution (MANDATORY for all projects)
+1. **Always add development symlinks to `.gitignore`**
+2. **Use comprehensive .gitignore patterns** for common symlink scenarios
+3. **Create restoration scripts** for development environment setup
+4. **Document symlink architecture** clearly
+
+### Required .gitignore Patterns
+```gitignore
+# Development Symlinks (GitHub Pages Deployment Protection)
+Docs/Standards
+Scripts/Common
+Data/SharedResources
+Config/Shared
+Assets/Common
+Resources/Shared
+lib/common
+src/shared
+
+# Common development symlink patterns
+**/Standards
+**/Common  
+**/Shared
+**/SharedResources
+
+# Backup protection - any broken symlinks
+**/.bin/*
+**/node_modules/.bin/*
+```
+
+### Development Workflow
+1. **Local**: Symlinks work normally for shared resources
+2. **Git**: Symlinks ignored via `.gitignore`, never committed
+3. **GitHub Pages**: Clean deployment without symlink issues
+4. **Team**: Restoration scripts recreate development environment
+
+**⚠️ NEVER commit symlinks that point to local-only paths!**
+
 ## Project Overview
 
 **BowersWorld-com** (codename: Digital Alexandria) is a comprehensive digital library management system built with Python. The system manages Anderson's Library Collection with AI-powered classification, full-text search, and modern web interfaces.

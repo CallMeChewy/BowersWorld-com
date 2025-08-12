@@ -84,3 +84,26 @@ Covers/
 Thumbs/
 Data/Books
 node_modules/
+
+# Development Symlinks (GitHub Pages Deployment Protection)
+# These are intentional symlinks for local development that should not be committed
+# They often point to shared resources or external paths that don't exist on GitHub runners
+Docs/Standards
+Scripts/Common
+Data/SharedResources
+Config/Shared
+Assets/Common
+Resources/Shared
+lib/common
+src/shared
+
+# Common development symlink patterns
+**/Standards
+**/Common  
+**/Shared
+**/SharedResources
+
+# Backup protection - any broken symlinks
+# (These patterns catch common broken symlink scenarios)
+**/.bin/*
+**/node_modules/.bin/*
