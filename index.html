@@ -4,6 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>OurLibrary - Getting Education Into the Hands of People Who Can Least Afford It</title>
+    <!-- Favicon - Simple book emoji -->
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>📚</text></svg>">
     <script src="https://unpkg.com/@tailwindcss/browser@4"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -123,7 +125,7 @@
 
     <!-- Banner Image -->
     <div class="banner-container">
-        <img src="Resources/Images/ProjectHimalayaBanner.png" alt="Project Himalaya - Human and AI collaboration" class="banner-image">
+        <img src="BowersWorld.com/Resources/Images/ProjectHimalayaBanner.png" alt="Project Himalaya - Human and AI collaboration" class="banner-image">
     </div>
 
     <!-- Main Content -->
@@ -149,25 +151,12 @@
                 <!-- Call to Action Button -->
                 <div class="mb-12">
                     <button onclick="showRegistration()" class="bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white font-bold py-4 px-8 rounded-lg text-xl transition-all duration-300 transform hover:scale-105 shadow-lg">
-                        📚 Join Our Library - It's Free!
+                        🚀 Get Started - Join OurLibrary!
                     </button>
                     <p class="text-gray-400 mt-4 text-sm">
                         Already a member? <a href="#" onclick="showLogin()" class="text-blue-400 hover:text-blue-300 underline">Sign in here</a>
                     </p>
-                    <div class="mt-4 space-x-2 text-center">
-                        <button onclick="showVerificationEmail()" class="bg-gradient-to-r from-green-600 to-emerald-600 hover:from-green-700 hover:to-emerald-700 text-white font-bold py-2 px-3 rounded transition-all duration-300 text-xs">
-                            📧 View Email
-                        </button>
-                        <button onclick="clearAllAccounts()" class="bg-gradient-to-r from-red-600 to-red-700 hover:from-red-700 hover:to-red-800 text-white font-bold py-2 px-3 rounded transition-all duration-300 text-xs">
-                            🗑️ Clear Accounts
-                        </button>
-                        <button onclick="emergencyClear()" class="bg-gradient-to-r from-orange-600 to-red-600 hover:from-orange-700 hover:to-red-700 text-white font-bold py-2 px-3 rounded transition-all duration-300 text-xs">
-                            🚨 Emergency Clear
-                        </button>
-                        <button onclick="showStoredData()" class="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white font-bold py-2 px-3 rounded transition-all duration-300 text-xs">
-                            🔍 Debug Data
-                        </button>
-                    </div>
+                    
                 </div>
             </div>
         </div>
@@ -207,31 +196,61 @@
         <!-- Registration/Login Modal Background -->
         <div id="modal-background" class="fixed inset-0 bg-black bg-opacity-50 z-40 hidden" onclick="hideModal()"></div>
         
-        <!-- Registration Form -->
-        <div id="registration-form" class="fixed inset-0 flex items-center justify-center z-50 hidden">
-            <div class="bg-gray-800 p-8 rounded-lg max-w-md w-full mx-4 max-h-screen overflow-y-auto">
+        <!-- Registration Choice Screen -->
+        <div id="registration-choice" class="fixed inset-0 flex items-center justify-center z-50 hidden">
+            <div class="bg-gray-800 p-8 rounded-lg max-w-md w-full mx-4">
                 <h2 class="text-2xl font-bold text-white mb-6 text-center">Join OurLibrary</h2>
+                <p class="text-gray-300 text-center mb-8">Choose how you'd like to create your account:</p>
+                
+                <div class="space-y-4">
+                    <button type="button" onclick="startGoogleRegistration()" class="w-full bg-red-600 hover:bg-red-700 text-white font-bold py-4 px-6 rounded-lg text-lg transition-all duration-300 transform hover:scale-105">
+                        📧 Continue with Google (Instant)
+                    </button>
+                    
+                    <div class="text-center text-gray-400 my-4">or</div>
+                    
+                    <button type="button" onclick="showEmailRegistrationForm()" class="w-full bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white font-bold py-4 px-6 rounded-lg text-lg transition-all duration-300 transform hover:scale-105">
+                        📧 Register with Email & Password
+                    </button>
+                </div>
+                
+                <div class="mt-8 text-center">
+                    <p class="text-gray-400 text-sm mb-2">
+                        Already have an account? 
+                        <a href="#" onclick="showLoginFromChoice()" class="text-blue-400 hover:text-blue-300 underline">Sign in here</a>
+                    </p>
+                    <button onclick="hideModal()" class="text-gray-400 hover:text-gray-300 underline">Cancel</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Email Registration Form -->
+        <div id="email-registration-form" class="fixed inset-0 flex items-center justify-center z-50 hidden">
+            <div class="bg-gray-800 p-8 rounded-lg max-w-md w-full mx-4 max-h-screen overflow-y-auto">
+                <div class="flex items-center mb-6">
+                    <button onclick="backToRegistrationChoice()" class="text-gray-400 hover:text-white mr-3">
+                        ← Back
+                    </button>
+                    <h2 class="text-2xl font-bold text-white">Email Registration</h2>
+                </div>
+                
                 <form id="register-form" onsubmit="handleRegistration(event)">
                     <div class="space-y-4">
                         <div>
                             <label class="block text-gray-300 text-sm font-bold mb-2">Email Address (User ID) *</label>
-                            <input type="email" name="email" required class="w-full px-3 py-2 bg-gray-700 text-white rounded focus:outline-none focus:ring-2 focus:ring-purple-500" placeholder="your.email@example.com">
+                            <input type="email" name="email" id="email" required class="w-full px-3 py-2 bg-gray-700 text-white rounded focus:outline-none focus:ring-2 focus:ring-purple-500" placeholder="your.email@example.com">
                         </div>
                         <div>
-                            <label class="block text-gray-300 text-sm font-bold mb-2">First Name *</label>
-                            <input type="text" name="firstName" required class="w-full px-3 py-2 bg-gray-700 text-white rounded focus:outline-none focus:ring-2 focus:ring-purple-500">
-                        </div>
-                        <div>
-                            <label class="block text-gray-300 text-sm font-bold mb-2">Last Name *</label>
-                            <input type="text" name="lastName" required class="w-full px-3 py-2 bg-gray-700 text-white rounded focus:outline-none focus:ring-2 focus:ring-purple-500">
+                            <label class="block text-gray-300 text-sm font-bold mb-2">Full Name *</label>
+                            <input type="text" name="fullName" id="fullName" required class="w-full px-3 py-2 bg-gray-700 text-white rounded focus:outline-none focus:ring-2 focus:ring-purple-500" placeholder="Enter your full name">
                         </div>
                         <div>
                             <label class="block text-gray-300 text-sm font-bold mb-2">Password *</label>
-                            <input type="password" name="password" required class="w-full px-3 py-2 bg-gray-700 text-white rounded focus:outline-none focus:ring-2 focus:ring-purple-500" placeholder="Minimum 8 characters">
+                            <input type="password" name="password" id="password" required class="w-full px-3 py-2 bg-gray-700 text-white rounded focus:outline-none focus:ring-2 focus:ring-purple-500" placeholder="Minimum 8 characters">
                         </div>
                         <div>
                             <label class="block text-gray-300 text-sm font-bold mb-2">Confirm Password *</label>
-                            <input type="password" name="confirmPassword" required class="w-full px-3 py-2 bg-gray-700 text-white rounded focus:outline-none focus:ring-2 focus:ring-purple-500" placeholder="Re-enter your password">
+                            <input type="password" name="confirmPassword" id="confirmPassword" required class="w-full px-3 py-2 bg-gray-700 text-white rounded focus:outline-none focus:ring-2 focus:ring-purple-500" placeholder="Re-enter your password">
                         </div>
                         <div>
                             <label class="block text-gray-300 text-sm font-bold mb-2">Zip Code</label>
@@ -247,23 +266,8 @@
                     
                     <div class="mt-6">
                         <button type="submit" class="w-full bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white font-bold py-2 px-4 rounded transition-all duration-300">
-                            Register for Free Access
+                            Create Account & Send Verification
                         </button>
-                    </div>
-                    
-                    <div class="mt-4 text-center">
-                        <p class="text-gray-400 text-sm mb-4">Or register with:</p>
-                        <div class="space-y-2">
-                            <button type="button" onclick="registerWithGoogle()" class="w-full bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-4 rounded transition-all duration-300">
-                                📧 Register with Google
-                            </button>
-                            <button type="button" onclick="registerWithGitHub()" class="w-full bg-gray-700 hover:bg-gray-600 text-white font-bold py-2 px-4 rounded transition-all duration-300">
-                                🐙 Register with GitHub
-                            </button>
-                            <button type="button" onclick="registerWithFacebook()" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded transition-all duration-300">
-                                📘 Register with Facebook
-                            </button>
-                        </div>
                     </div>
                 </form>
                 
@@ -329,34 +333,138 @@
         </div>
     </footer>
 
-    <script>
-        // Modal Management
-        function showRegistration() {
+    <!-- OurLibrary Google Sheets Integration -->
+    <script src="JS/OurLibraryGoogleAuth.js"></script>
+    
+    <script type="module">
+        // Import the functions you need from the SDKs you need
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js";
+        import { getAuth, createUserWithEmailAndPassword, sendEmailVerification, signInWithEmailAndPassword, GoogleAuthProvider, signInWithPopup, signInWithCredential } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js";
+        // TODO: Add SDKs for Firebase products that you want to use
+        // https://firebase.google.com/docs/web/setup#available-libraries
+
+        // Your web app's Firebase configuration - Our Library Project
+        const firebaseConfig = {
+          apiKey: "AIzaSyAsG8hleX4WRKCLcIJdWkcNptWNMGdNjzk",
+          authDomain: "our-library-d7b60.firebaseapp.com",
+          projectId: "our-library-d7b60",
+          storageBucket: "our-library-d7b60.firebasestorage.app",
+          messagingSenderId: "71206584632",
+          appId: "1:71206584632:web:61a21f2d08b9e318dfc1cd",
+          measurementId: "G-XL47Q42LB8"
+        };
+
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        
+        // Export Firebase functions to global scope
+        window.signInWithCredential = signInWithCredential;
+        window.createUserWithEmailAndPassword = createUserWithEmailAndPassword;
+        window.sendEmailVerification = sendEmailVerification;
+        window.signInWithEmailAndPassword = signInWithEmailAndPassword;
+        window.GoogleAuthProvider = GoogleAuthProvider;
+        window.signInWithPopup = signInWithPopup;
+        
+        // Initialize OurLibrary Google Sheets Integration
+        const googleAuth = new OurLibraryGoogleAuth({
+            clientId: '71206584632-q40tcfnhmjvtj2mlikc8lakk9vrhkngi.apps.googleusercontent.com', // CORRECT OurLibrary Google OAuth Client ID
+            apiKey: firebaseConfig.apiKey,
+            userRegistrationsSheetId: '1lhdKnjyltHHQaDSfAfQ9Vcog40vsnFTqzDFxa9sEBFE', // OurLibrary_UserRegistrations_2025
+            incompleteEmailsSheetId: '197Qu-GeIYaL2CyiFArhgM9GJbuyGCUK4JZjxWXsAHaI', // OurLibrary_IncompleteEmails_Tracker
+            sessionTrackingSheetId: '1KZPSyXCqkWKHzaM8Y45BmoZqHpzU-VWOpQq0W8UELxg'  // OurLibrary_SessionAnalytics_Dashboard
+        });
+        
+        // Initialize Hybrid Registration Manager
+        const registrationManager = new OurLibraryRegistrationManager(auth, googleAuth);
+        
+        // Make globally available
+        window.googleAuth = googleAuth;
+        window.registrationManager = registrationManager;
+        window.signInWithCredential = signInWithCredential;
+        
+        // Set up email blur tracking for incomplete email capture
+        function setupEmailTracking() {
+            const emailInput = document.getElementById('email');
+            if (emailInput) {
+                emailInput.addEventListener('blur', function(event) {
+                    const email = event.target.value.trim();
+                    if (email && email.length > 0) {
+                        console.log('📧 Email blur detected, logging incomplete email:', email);
+                        registrationManager.logIncompleteEmail(email, 'email_blur').catch(error => {
+                            console.warn('⚠️ Could not log incomplete email:', error);
+                        });
+                    }
+                });
+                console.log('✅ Email tracking set up');
+            } else {
+                console.warn('⚠️ Email input not found for tracking');
+            }
+        }
+        
+        // Initialize Google Sheets integration
+        googleAuth.initialize().catch(error => {
+            console.warn('⚠️ Google Sheets integration not available:', error);
+        });
+
+        // Modal Management - Make functions globally available
+        window.showRegistration = function() {
+            console.log('📝 Showing registration choice...');
             document.getElementById('modal-background').classList.remove('hidden');
-            document.getElementById('registration-form').classList.remove('hidden');
+            document.getElementById('registration-choice').classList.remove('hidden');
+            document.getElementById('email-registration-form').classList.add('hidden');
             document.getElementById('login-form').classList.add('hidden');
         }
         
-        function showLogin() {
+        window.showLogin = function() {
+            console.log('🔑 Showing login modal...');
             document.getElementById('modal-background').classList.remove('hidden');
             document.getElementById('login-form').classList.remove('hidden');
-            document.getElementById('registration-form').classList.add('hidden');
+            document.getElementById('registration-choice').classList.add('hidden');
+            document.getElementById('email-registration-form').classList.add('hidden');
         }
         
-        function showRegistrationFromLogin() {
+        window.showRegistrationFromLogin = function() {
             document.getElementById('login-form').classList.add('hidden');
-            document.getElementById('registration-form').classList.remove('hidden');
+            document.getElementById('registration-choice').classList.remove('hidden');
         }
         
-        function hideModal() {
+        window.hideModal = function() {
             document.getElementById('modal-background').classList.add('hidden');
-            document.getElementById('registration-form').classList.add('hidden');
+            document.getElementById('registration-choice').classList.add('hidden');
+            document.getElementById('email-registration-form').classList.add('hidden');
             document.getElementById('login-form').classList.add('hidden');
+        }
+        
+        // New modal navigation functions
+        window.startGoogleRegistration = function() {
+            console.log('🚀 Starting Google registration...');
+            // Use the existing registerWithGoogle function
+            registerWithGoogle();
+        }
+        
+        window.showEmailRegistrationForm = function() {
+            console.log('📧 Showing email registration form...');
+            document.getElementById('registration-choice').classList.add('hidden');
+            document.getElementById('email-registration-form').classList.remove('hidden');
+            setupEmailTracking();
+        }
+        
+        window.backToRegistrationChoice = function() {
+            console.log('⬅️ Back to registration choice...');
+            document.getElementById('email-registration-form').classList.add('hidden');
+            document.getElementById('registration-choice').classList.remove('hidden');
+        }
+        
+        window.showLoginFromChoice = function() {
+            console.log('🔑 Switching to login...');
+            document.getElementById('registration-choice').classList.add('hidden');
+            document.getElementById('login-form').classList.remove('hidden');
         }
         
         // Form Validation Functions
         function validateEmail(email) {
-            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            const emailRegex = /^[^S@]+@[^S@]+\.[^S@]+$/;
             return emailRegex.test(email);
         }
         
@@ -411,268 +519,201 @@
         }
         
         // Form Handlers
-        function sendVerificationEmail(userData) {
-            // In a real implementation, this would call a backend API
-            // For now, we'll simulate the email sending process
-            console.log('Sending verification email to:', userData.email);
-            
-            // Generate a verification token (in real app, this would be done server-side)
-            const verificationToken = btoa(userData.email + ':' + Date.now());
-            userData.verificationToken = verificationToken;
-            
-            // Update stored data with token
-            const existingRegistrations = JSON.parse(localStorage.getItem('registrations') || '[]');
-            const userIndex = existingRegistrations.findIndex(reg => reg.email === userData.email);
-            if (userIndex !== -1) {
-                existingRegistrations[userIndex] = userData;
-                localStorage.setItem('registrations', JSON.stringify(existingRegistrations));
-            }
-            
-            // Simulate email content (in real app, this would be sent via email service)
-            const verificationUrl = `${window.location.origin}${window.location.pathname}?verify=${verificationToken}`;
-            
-            // Store email content for user to see
-            const emailContent = `📧 VERIFICATION EMAIL SENT TO ${userData.email}
-
-Subject: Verify your OurLibrary account
-
-Hello ${userData.firstName}!
-
-Welcome to OurLibrary! Please click the link below to verify your email address:
-
-${verificationUrl}
-
-If you didn't create an account, please ignore this email.
-
-Best regards,
-The OurLibrary Team
-
----
-⚠️ DEMO MODE: In production, this email would be sent to your inbox. 
-For testing, you can copy the verification link above.`;
-            
-            // Store the email content so we can show it to the user
-            localStorage.setItem('lastVerificationEmail', emailContent);
-            
-            // Also log to console for debugging
-            console.log('Verification email content stored:', emailContent);
-            
-            return true;
-        }
-
-        function showVerificationEmail() {
-            const emailContent = localStorage.getItem('lastVerificationEmail');
-            if (emailContent) {
-                alert(emailContent);
-            } else {
-                alert('No verification email found. Please register first.');
-            }
-        }
-
-        function clearAllAccounts() {
-            // Clear all stored registration data
-            localStorage.clear(); // Clear everything to be sure
-            
-            // Also explicitly remove known keys
-            localStorage.removeItem('registrations');
-            localStorage.removeItem('pendingRegistration');
-            localStorage.removeItem('lastVerificationEmail');
-            localStorage.removeItem('currentUser');
-            
-            // Verify it's cleared
-            const remaining = localStorage.getItem('registrations');
-            if (remaining) {
-                alert('❌ Failed to clear localStorage. Please manually clear your browser data.');
-                console.log('Remaining data:', remaining);
-            } else {
-                alert('✅ All accounts cleared!\n\nYou can now register with any email address again.\n\nAll stored data has been removed from your browser.');
-                console.log('localStorage cleared successfully');
-            }
-        }
-
-        // Add immediate clearing function for debugging
-        function emergencyClear() {
-            localStorage.clear();
-            sessionStorage.clear();
-            alert('🚨 EMERGENCY CLEAR: All browser storage cleared!\n\nTry registration again.');
-        }
-
-        // Debug function to show stored data
-        function showStoredData() {
-            const registrations = localStorage.getItem('registrations');
-            const pending = localStorage.getItem('pendingRegistration');
-            const email = localStorage.getItem('lastVerificationEmail');
-            
-            let message = '🔍 STORED DATA DEBUG:\n\n';
-            message += `Registrations: ${registrations ? JSON.parse(registrations).length + ' accounts' : 'None'}\n`;
-            message += `Pending: ${pending ? 'Yes' : 'None'}\n`;
-            message += `Last Email: ${email ? 'Yes' : 'None'}\n\n`;
-            
-            if (registrations) {
-                const parsed = JSON.parse(registrations);
-                message += 'Registered Emails:\n';
-                parsed.forEach(reg => message += `• ${reg.email}\n`);
-            }
-            
-            alert(message);
-        }
-
-        function handleRegistration(event) {
+        window.handleRegistration = async function(event) {
             event.preventDefault();
-            
-            // Remove any existing error messages
-            const existingError = document.getElementById('validation-error');
-            if (existingError) {
-                existingError.remove();
-            }
             
             const formData = new FormData(event.target);
             const email = formData.get('email').trim().toLowerCase();
-            const firstName = formData.get('firstName').trim();
-            const lastName = formData.get('lastName').trim();
+            const fullName = formData.get('fullName').trim();
             const password = formData.get('password');
             const confirmPassword = formData.get('confirmPassword');
-            const zipCode = formData.get('zipCode').trim();
+            const zipCode = formData.get('zipCode');
             const agreeTerms = formData.get('agreeTerms');
             
-            // Validation
-            if (!validateEmail(email)) {
-                showValidationError('Please enter a valid email address.');
-                return;
-            }
-            
-            if (!validateName(firstName)) {
-                showValidationError('First name must be 2-50 characters, letters only.');
-                return;
-            }
-            
-            if (!validateName(lastName)) {
-                showValidationError('Last name must be 2-50 characters, letters only.');
-                return;
-            }
-            
-            if (!validatePassword(password)) {
-                showValidationError('Password must be at least 8 characters with letters and numbers.');
-                return;
-            }
-            
+            // Basic validation
             if (!validatePasswordMatch(password, confirmPassword)) {
-                showValidationError('Passwords do not match. Please try again.');
+                showValidationError('Passwords do not match.');
                 return;
             }
             
-            if (!validateZipCode(zipCode)) {
-                showValidationError('Please enter a valid zip/postal code.');
+            if (!validateName(fullName)) {
+                showValidationError('Please enter a valid full name (2-50 characters, letters and spaces only).');
                 return;
             }
-            
+
             if (!agreeTerms) {
-                showValidationError('You must agree to the Terms of Service to continue.');
+                showValidationError('You must agree to the Terms of Service.');
                 return;
             }
-            
-            // Check if user already registered
-            const existingRegistrations = JSON.parse(localStorage.getItem('registrations') || '[]');
-            if (existingRegistrations.find(reg => reg.email === email)) {
-                showValidationError('An account with this email already exists. Please sign in instead.');
-                return;
-            }
-            
-            const userData = {
-                email: email,
-                firstName: firstName,
-                lastName: lastName,
-                zipCode: zipCode,
-                agreeTerms: true,
-                registrationDate: new Date().toISOString(),
-                method: 'email',
-                verified: false,
-                id: Date.now().toString(),
-                passwordHash: btoa(password) // In real app, use proper hashing
-            };
-            
-            // Store user data
-            existingRegistrations.push(userData);
-            localStorage.setItem('registrations', JSON.stringify(existingRegistrations));
-            localStorage.setItem('pendingRegistration', JSON.stringify(userData));
-            
-            // Send verification email
-            const emailSent = sendVerificationEmail(userData);
-            
-            if (emailSent) {
-                // Show success message first
-                alert(`✅ Registration successful for ${userData.email}!\n\n👋 Welcome, ${userData.firstName}!\n\n📧 Verification email is being prepared...\n\nClick OK to see your verification email.`);
+
+            try {
+                // Create Firebase account directly
+                const userCredential = await window.createUserWithEmailAndPassword(auth, email, password);
+                const user = userCredential.user;
                 
-                // Show the verification email content immediately after user clicks OK
-                const emailContent = localStorage.getItem('lastVerificationEmail');
-                if (emailContent) {
-                    alert(emailContent);
-                } else {
-                    alert('⚠️ Email content not found. Please try the "View Last Email" button below.');
+                // Send email verification
+                await window.sendEmailVerification(user);
+                
+                // Log registration completion
+                if (window.registrationManager) {
+                    await window.registrationManager.logCompleteRegistration({
+                        userId: user.uid,
+                        email: email,
+                        name: fullName,
+                        authMethod: 'email',
+                        location: zipCode,
+                        consent: true
+                    });
                 }
-            } else {
-                showValidationError('Registration completed but failed to send verification email. Please contact support.');
+                
+                alert(`✅ Registration successful! Please check ${email} for verification link.`);
+                hideModal();
+                
+                // Redirect to main library
+                setTimeout(() => {
+                    window.location.href = 'desktop-library-enhanced.html';
+                }, 1500);
+                
+            } catch (error) {
+                console.error("Registration error:", error);
+                let errorMessage = error.message;
+                if (error.code === 'auth/email-already-in-use') {
+                    errorMessage = 'This email is already registered. Please use the login form instead.';
+                } else if (error.code === 'auth/weak-password') {
+                    errorMessage = 'Password is too weak. Please use at least 8 characters with letters and numbers.';
+                }
+                showValidationError(errorMessage);
             }
-            
-            // Clear form
-            event.target.reset();
-            hideModal();
         }
         
-        function handleLogin(event) {
+        window.handleLogin = function(event) {
             event.preventDefault();
             const formData = new FormData(event.target);
             const email = formData.get('email').trim().toLowerCase();
             const password = formData.get('password');
-            
-            // Check if user exists in registrations
-            const registrations = JSON.parse(localStorage.getItem('registrations') || '[]');
-            const user = registrations.find(reg => reg.email === email);
-            
-            if (user) {
-                if (!user.verified) {
-                    alert(`📧 Account found for ${user.firstName}!\n\nHowever, your email address hasn't been verified yet.\n\nPlease:\n1. Check your email for verification link\n2. Click the link to verify your account\n3. Return here to sign in\n\nNote: This is a demo - email verification will be implemented in the next phase.`);
-                } else {
-                    alert(`🎉 Welcome back, ${user.firstName}!\n\nRedirecting to your library...\n\nNote: This is a demo - library interface will be implemented in the next phase.`);
+
+            window.signInWithEmailAndPassword(auth, email, password)
+                .then((userCredential) => {
+                    const user = userCredential.user;
+                    if (user.emailVerified) {
+                        alert(`Welcome back ${user.displayName || 'to OurLibrary'}!`);
+                        hideModal();
+                        
+                        // Redirect to main library
+                        setTimeout(() => {
+                            window.location.href = 'desktop-library-enhanced.html';
+                        }, 1500);
+                    } else {
+                        alert('Please verify your email before signing in. Check your inbox for the verification link.');
+                    }
+                })
+                .catch((error) => {
+                    console.error('❌ Login error:', error);
+                    let errorMessage = error.message;
+                    if (error.code === 'auth/user-not-found') {
+                        errorMessage = 'No account found with this email. Please register first.';
+                    } else if (error.code === 'auth/wrong-password') {
+                        errorMessage = 'Incorrect password. Please try again.';
+                    } else if (error.code === 'auth/invalid-email') {
+                        errorMessage = 'Please enter a valid email address.';
+                    }
+                    alert(errorMessage);
+                });
+        }
+        
+        // Social Authentication Handlers
+        window.registerWithGoogle = function() {
+            console.log('🚀 Starting Google registration...');
+            const provider = new window.GoogleAuthProvider();
+            window.signInWithPopup(auth, provider)
+                .then(async (result) => {
+                    const user = result.user;
+                    console.log('✅ Google OAuth success:', user);
                     
-                    // Store current user session
-                    localStorage.setItem('currentUser', JSON.stringify(user));
-                }
-                hideModal();
-                return;
-            }
-            
-            alert('❌ Email not found.\n\nPlease:\n• Check your email address\n• Register if you don\'t have an account\n• Ensure you\'ve completed registration');
+                    try {
+                        // Complete Google registration through hybrid manager
+                        const registrationResult = await window.registrationManager.completeGoogleRegistration({
+                            email: user.email,
+                            name: user.displayName,
+                            credential: null // We already have Firebase user
+                        }, {
+                            location: '', // Could prompt for zip code if needed
+                            consent: true
+                        });
+                        
+                        if (registrationResult.success) {
+                            alert(`✅ Welcome ${user.displayName}! Account created successfully with Google.`);
+                            hideModal();
+                            
+                            // Redirect to main library app
+                            setTimeout(() => {
+                                window.location.href = 'desktop-library-enhanced.html';
+                            }, 1500);
+                        } else {
+                            throw new Error(registrationResult.error);
+                        }
+                    } catch (trackingError) {
+                        console.warn('⚠️ Registration tracking failed, but Firebase auth succeeded:', trackingError);
+                        alert(`✅ Welcome ${user.displayName}! Account created successfully with Google.`);
+                        hideModal();
+                        
+                        setTimeout(() => {
+                            window.location.href = 'desktop-library-enhanced.html';
+                        }, 1500);
+                    }
+                }).catch((error) => {
+                    console.error('❌ Google registration error:', error);
+                    alert(`❌ Google registration failed: ${error.message}`);
+                });
+        }
+
+        window.handleRegistration = handleRegistration;
+        window.handleLogin = handleLogin;
+        window.registerWithGoogle = registerWithGoogle;
+        window.showRegistration = showRegistration;
+        window.showLogin = showLogin;
+        window.hideModal = hideModal;
+        window.showRegistrationFromLogin = showRegistrationFromLogin;
+
+        window.registerWithGitHub = function() {
+            alert('GitHub registration will be implemented in the next phase.');
         }
         
-        // Social Authentication Handlers (Placeholders)
-        function registerWithGoogle() {
-            alert('Google registration will be implemented in the next phase.\n\nThis will use Google OAuth for instant account creation.');
+        window.registerWithFacebook = function() {
+            alert('Facebook registration will be implemented in the next phase.');
         }
         
-        function registerWithGitHub() {
-            alert('GitHub registration will be implemented in the next phase.\n\nThis will use GitHub OAuth for instant account creation.');
+        window.loginWithGoogle = function() {
+            console.log('🔑 Starting Google login...');
+            const provider = new window.GoogleAuthProvider();
+            window.signInWithPopup(auth, provider)
+                .then((result) => {
+                    const user = result.user;
+                    console.log('✅ Google login success:', user);
+                    alert(`✅ Welcome back ${user.displayName}!`);
+                    hideModal();
+                    
+                    // Redirect to main library app
+                    setTimeout(() => {
+                        window.location.href = 'desktop-library-enhanced.html';
+                    }, 1500);
+                }).catch((error) => {
+                    console.error('❌ Google login error:', error);
+                    alert(`❌ Google login failed: ${error.message}`);
+                });
         }
         
-        function registerWithFacebook() {
-            alert('Facebook registration will be implemented in the next phase.\n\nThis will use Facebook OAuth for instant account creation.');
-        }
-        
-        function loginWithGoogle() {
-            alert('Google sign-in will be implemented in the next phase.');
-        }
-        
-        function loginWithGitHub() {
+        window.loginWithGitHub = function() {
             alert('GitHub sign-in will be implemented in the next phase.');
         }
         
-        function loginWithFacebook() {
+        window.loginWithFacebook = function() {
             alert('Facebook sign-in will be implemented in the next phase.');
         }
         
         // Terms of Service
-        function showTerms() {
-            alert(`OurLibrary Terms of Service\n\n1. This is a free educational service\n2. You must be 13+ years old to register\n3. Respect copyright laws in your region\n4. Books are for educational use only\n5. We protect your privacy and data\n6. Service provided "as-is"\n\nFull terms will be available on a dedicated page.`);
+        window.showTerms = function() {
+            alert(`OurLibrary Terms of Service\n\n1. This is a free educational service\n2. You must be 13+ years old to register\n3. Respect copyright laws in your region\n4. Books are for educational use only\n5. We protect your privacy and data\n6. Service provided \"as-is\"\n\nFull terms will be available on a dedicated page.`);
         }
         
         // Keyboard shortcut to close modal
@@ -684,4 +725,3 @@ For testing, you can copy the verification link above.`;
     </script>
 </body>
 </html>
-<!-- FORCE DEPLOYMENT Tue Aug 12 01:13:57 PM EDT 2025 -->
